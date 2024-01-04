@@ -26,5 +26,107 @@ public class Usuario {
     private String correo;
     @Column(name = "estado", nullable = false)
     private Integer estado;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "rol_id")
+    private Rol rol;
 
+    public Usuario() {
+    }
+
+    public Usuario(String usuario, String password, String telefono, String nombre, String apellido, String correo, Integer estado, Rol rol) {
+        this.usuario = usuario;
+        this.password = password;
+        this.telefono = telefono;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.correo = correo;
+        this.estado = estado;
+        this.rol = rol;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public String getApellido() {
+        return apellido;
+    }
+
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
+    }
+
+    public Rol getRol() {
+        return rol;
+    }
+
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", usuario='" + usuario + '\'' +
+                ", password='" + password + '\'' +
+                ", telefono='" + telefono + '\'' +
+                ", nombre='" + nombre + '\'' +
+                ", apellido='" + apellido + '\'' +
+                ", correo='" + correo + '\'' +
+                ", estado=" + estado +
+                ", rol=" + rol +
+                '}';
+    }
 }

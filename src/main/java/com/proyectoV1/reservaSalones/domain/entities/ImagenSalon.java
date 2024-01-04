@@ -13,4 +13,49 @@ public class ImagenSalon {
 
     @Column(name = "url", length = 255, nullable = false)
     private String url;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "salon_id")
+    private Salon salon;
+
+    public ImagenSalon() {
+    }
+
+    public ImagenSalon(String url, Salon salon) {
+        this.url = url;
+        this.salon = salon;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public Salon getSalon() {
+        return salon;
+    }
+
+    public void setSalon(Salon salon) {
+        this.salon = salon;
+    }
+
+    @Override
+    public String toString() {
+        return "ImagenSalon{" +
+                "id=" + id +
+                ", url='" + url + '\'' +
+                ", salon=" + salon +
+                '}';
+    }
 }
