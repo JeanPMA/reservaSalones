@@ -1,7 +1,7 @@
 -- crear tabla ROL
 CREATE TABLE "rol" (
   "id" integer PRIMARY KEY not null,
-  "nombre" varchar(100) not null,
+  "nombre" varchar(100) not null UNIQUE,
   "created_at" timestamp not null
 );
 create sequence rol_sequence as integer increment 1;
@@ -9,7 +9,7 @@ create sequence rol_sequence as integer increment 1;
 -- crear tabla TIPO SOLICITUD RESERVA
 CREATE TABLE "tipo_solicitud_reserva" (
   "id" integer PRIMARY KEY not null,
-  "nombre" varchar(100) not null,
+  "nombre" varchar(100) not null UNIQUE,
   "created_at" timestamp not null
 );
 create sequence tipo_solicitud_reserva_sequence as integer increment 1;
@@ -17,12 +17,12 @@ create sequence tipo_solicitud_reserva_sequence as integer increment 1;
 -- crear tabla USUARIO
 CREATE TABLE "usuario" (
   "id" integer PRIMARY KEY not null,
-  "usuario" varchar(100) not null,
+  "usuario" varchar(100) not null UNIQUE,
   "password" varchar(100) not null,
   "telefono" integer not null,
   "nombre" varchar(100) not null,
   "apellido" varchar(100) not null,
-  "correo" varchar(255) not null,
+  "correo" varchar(255) not null UNIQUE ,
   "estado" integer not null,
   "rol_id" integer
 );
@@ -32,7 +32,7 @@ ALTER TABLE "usuario" ADD FOREIGN KEY ("rol_id") REFERENCES "rol" ("id") ON DELE
 -- crear tabla SALON
 CREATE TABLE "salon" (
   "id" integer PRIMARY KEY not null,
-  "nombre"varchar(100) not null,
+  "nombre"varchar(100) not null UNIQUE ,
   "direccion" varchar(255) not null,
   "capacidad" integer not null,
   "descripcion" varchar(100) not null,
@@ -57,7 +57,7 @@ ALTER TABLE "imagen_salon" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("id"
 -- crear tabla TELEFONO SALON
 CREATE TABLE "telefono_salon" (
   "id" integer PRIMARY KEY not null,
-  "numero" integer not null,
+  "numero" integer not null UNIQUE,
   "salon_id" integer
 );
 create sequence telefono_salon_sequence as integer increment 1;
@@ -83,7 +83,7 @@ ALTER TABLE "solicitud_reserva" ADD FOREIGN KEY ("usuario_id") REFERENCES "usuar
 -- crear tabla SERVICIO
 CREATE TABLE "servicio" (
   "id" integer PRIMARY KEY not null,
-  "nombre" varchar(100) not null,
+  "nombre" varchar(100) not null UNIQUE,
   "detalle" varchar(255) not null,
   "estado" integer not null,
   "created_at" timestamp
@@ -93,7 +93,7 @@ create sequence servicio_sequence as integer increment 1;
 
 -- crear tabla SERVICIO SALON
 CREATE TABLE "servicio_salon" (
-  "id" integer PRIMARY KEY not null,
+  "id" SERIAL PRIMARY KEY not null,
   "salon_id" integer,
   "servicio_id" integer
 );
