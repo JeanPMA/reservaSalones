@@ -1,30 +1,13 @@
-package com.proyectoV1.reservaSalones.domain.entities;
-
-import jakarta.persistence.*;
+package com.proyectoV1.reservaSalones.dto;
 
 import java.time.LocalDateTime;
 
-@Entity
-@Table(name = "tipo_solicitud_reserva")
-public class TipoSolicitudReserva {
-    @Id
-    @SequenceGenerator(name = "tipo_solicitud_reserva_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "tipo_solicitud_reserva_sequence")
-    @Column(nullable = false)
+public class TipoSolicitudReservaDTO {
     private Integer id;
-
-    @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
-
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime created_at;
 
-    public TipoSolicitudReserva() {
-    }
-
-    public TipoSolicitudReserva(String nombre, LocalDateTime created_at) {
-        this.nombre = nombre;
-        this.created_at = created_at;
+    public TipoSolicitudReservaDTO() {
     }
 
     public Integer getId() {
@@ -53,7 +36,7 @@ public class TipoSolicitudReserva {
 
     @Override
     public String toString() {
-        return "TipoSolicitudReserva{" +
+        return "TipoSolicitudReservaDTO{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", created_at=" + created_at +
