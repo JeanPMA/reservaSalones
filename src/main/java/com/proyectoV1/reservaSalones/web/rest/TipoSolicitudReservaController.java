@@ -39,7 +39,7 @@ public class TipoSolicitudReservaController {
 
         TipoSolicitudReservaDTO tipoSolicitudReservaDTO = tipoSolicitudReservaService.save(dto);
 
-        return ResponseEntity.created(new URI("/v1/students/" + tipoSolicitudReservaDTO.getId())).body(tipoSolicitudReservaDTO);
+        return ResponseEntity.created(new URI("/v1/tipo-sr/" + tipoSolicitudReservaDTO.getId())).body(tipoSolicitudReservaDTO);
     }
 
     @PutMapping("/{id}")

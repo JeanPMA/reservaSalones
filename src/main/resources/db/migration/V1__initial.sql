@@ -31,7 +31,7 @@ ALTER TABLE "usuario" ADD FOREIGN KEY ("rol_id") REFERENCES "rol" ("id") ON DELE
 
 -- crear tabla SALON
 CREATE TABLE "salon" (
-  "id" integer PRIMARY KEY not null,
+  "salon_id" integer PRIMARY KEY not null,
   "nombre"varchar(100) not null UNIQUE ,
   "direccion" varchar(255) not null,
   "capacidad" integer not null,
@@ -51,7 +51,7 @@ CREATE TABLE "imagen_salon" (
   "salon_id" integer
 );
 create sequence imagen_salon_sequence as integer increment 1;
-ALTER TABLE "imagen_salon" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("id") ON DELETE restrict ON UPDATE restrict;
+ALTER TABLE "imagen_salon" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("salon_id") ON DELETE restrict ON UPDATE restrict;
 
 
 -- crear tabla TELEFONO SALON
@@ -61,7 +61,7 @@ CREATE TABLE "telefono_salon" (
   "salon_id" integer
 );
 create sequence telefono_salon_sequence as integer increment 1;
-ALTER TABLE "telefono_salon" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("id") ON DELETE restrict ON UPDATE restrict;
+ALTER TABLE "telefono_salon" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("salon_id") ON DELETE restrict ON UPDATE restrict;
 
 
 -- crear tabla SOLICITUD RESERVA
@@ -76,13 +76,13 @@ CREATE TABLE "solicitud_reserva" (
   "tipoSR_id" integer
 );
 create sequence solicitud_reserva_sequence as integer increment 1;
-ALTER TABLE "solicitud_reserva" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("id") ON DELETE restrict ON UPDATE restrict;
+ALTER TABLE "solicitud_reserva" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("salon_id") ON DELETE restrict ON UPDATE restrict;
 ALTER TABLE "solicitud_reserva" ADD FOREIGN KEY ("tipoSR_id") REFERENCES "tipo_solicitud_reserva" ("id") ON DELETE restrict ON UPDATE restrict;
 ALTER TABLE "solicitud_reserva" ADD FOREIGN KEY ("usuario_id") REFERENCES "usuario" ("id") ON DELETE restrict ON UPDATE restrict;
 
 -- crear tabla SERVICIO
 CREATE TABLE "servicio" (
-  "id" integer PRIMARY KEY not null,
+  "servicio_id" integer PRIMARY KEY not null,
   "nombre" varchar(100) not null UNIQUE,
   "detalle" varchar(255) not null,
   "estado" integer not null,
@@ -97,8 +97,8 @@ CREATE TABLE "servicio_salon" (
   "salon_id" integer,
   "servicio_id" integer
 );
-ALTER TABLE "servicio_salon" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("id") ON DELETE restrict ON UPDATE restrict;
-ALTER TABLE "servicio_salon" ADD FOREIGN KEY ("servicio_id") REFERENCES "servicio" ("id") ON DELETE restrict ON UPDATE restrict;
+ALTER TABLE "servicio_salon" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("salon_id") ON DELETE restrict ON UPDATE restrict;
+ALTER TABLE "servicio_salon" ADD FOREIGN KEY ("servicio_id") REFERENCES "servicio" ("servicio_id") ON DELETE restrict ON UPDATE restrict;
 
 
 
