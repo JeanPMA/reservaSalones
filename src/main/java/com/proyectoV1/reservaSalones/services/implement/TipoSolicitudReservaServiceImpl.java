@@ -35,7 +35,9 @@ public class TipoSolicitudReservaServiceImpl implements TipoSolicitudReservaServ
     @Override
     public TipoSolicitudReservaDTO save(TipoSolicitudReservaDTO dto) {
         TipoSolicitudReserva tipoSolicitudReserva = tipoSolicitudReservaMapper.toEntity(dto);
-        tipoSolicitudReserva.setCreated_at(LocalDateTime.now());
+        if (tipoSolicitudReserva.getCreated_at() == null) {
+            tipoSolicitudReserva.setCreated_at(LocalDateTime.now());
+        }
         tipoSolicitudReserva = tipoSolicitudReservaRepository.save(tipoSolicitudReserva);
         return tipoSolicitudReservaMapper.toDto(tipoSolicitudReserva);
     }

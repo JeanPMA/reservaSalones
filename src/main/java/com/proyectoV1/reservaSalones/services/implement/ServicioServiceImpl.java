@@ -34,7 +34,9 @@ public class ServicioServiceImpl implements ServicioService {
     @Override
     public ServicioDTO save(ServicioDTO dto) {
         Servicio servicio = servicioMapper.toEntity(dto);
-        servicio.setCreated_at(LocalDateTime.now());
+        if (servicio.getCreated_at() == null) {
+            servicio.setCreated_at(LocalDateTime.now());
+        }
         servicio = servicioRepository.save(servicio);
         return servicioMapper.toDto(servicio);
     }
