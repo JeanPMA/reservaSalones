@@ -1,49 +1,19 @@
-package com.proyectoV1.reservaSalones.domain.entities;
+package com.proyectoV1.reservaSalones.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.*;
+import com.proyectoV1.reservaSalones.domain.entities.Rol;
 
-import java.time.LocalDateTime;
-
-@Entity
-@Table(name = "usuario")
-public class Usuario {
-    @Id
-    @SequenceGenerator(name = "usuario_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_sequence")
-    @Column(nullable = false)
+public class UsuarioDTO {
     private Long id;
-    @Column(name = "usuario", length = 100, nullable = false)
     private String usuario;
-    @Column(name = "password", length = 100, nullable = false)
     private String password;
-    @Column(name = "telefono", nullable = false)
     private Integer telefono;
-    @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
-    @Column(name = "apellido", length = 100, nullable = false)
     private String apellido;
-    @Column(name = "correo", length = 255, nullable = false)
     private String correo;
-    @Column(name = "estado", nullable = false)
     private Integer estado;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @JoinColumn(name = "rol_id")
     private Rol rol;
 
-    public Usuario() {
-    }
-
-    public Usuario(String usuario, String password, Integer telefono, String nombre, String apellido, String correo, Integer estado, Rol rol) {
-        this.usuario = usuario;
-        this.password = password;
-        this.telefono = telefono;
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.correo = correo;
-        this.estado = estado;
-        this.rol = rol;
+    public UsuarioDTO() {
     }
 
     public Long getId() {
@@ -117,9 +87,10 @@ public class Usuario {
     public void setRol(Rol rol) {
         this.rol = rol;
     }
+
     @Override
     public String toString() {
-        return "Usuario{" +
+        return "UsuarioDTO{" +
                 "id=" + id +
                 ", usuario='" + usuario + '\'' +
                 ", password='" + password + '\'' +

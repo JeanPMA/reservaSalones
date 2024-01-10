@@ -1,10 +1,12 @@
 package com.proyectoV1.reservaSalones.services.mapper;
 
-import com.proyectoV1.reservaSalones.domain.entities.Rol;
-import com.proyectoV1.reservaSalones.domain.entities.TelefonoSalon;
-import com.proyectoV1.reservaSalones.dto.RolDTO;
-import com.proyectoV1.reservaSalones.dto.TelefonoSalonDTO;
 
+import com.proyectoV1.reservaSalones.domain.entities.TelefonoSalon;
+
+import com.proyectoV1.reservaSalones.dto.TelefonoSalonDTO;
+import org.springframework.stereotype.Component;
+
+@Component
 public class TelefonoSalonMapper implements CustomMapper<TelefonoSalonDTO, TelefonoSalon>{
     @Override
     public TelefonoSalonDTO toDto(TelefonoSalon telefonoSalon) {

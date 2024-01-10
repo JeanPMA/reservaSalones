@@ -42,7 +42,7 @@ public class TelefonoSalonController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<TelefonoSalonDTO> editRol(@RequestBody final TelefonoSalonDTO dto,
+    public ResponseEntity<TelefonoSalonDTO> editTelefono(@RequestBody final TelefonoSalonDTO dto,
                                           @PathVariable final Long id) throws URISyntaxException {
         if (dto.getId() == null) {
             throw new IllegalArgumentException("Invalid telefono-salon id, valor nulo");

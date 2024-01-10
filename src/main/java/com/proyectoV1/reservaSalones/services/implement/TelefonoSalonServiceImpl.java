@@ -1,6 +1,5 @@
 package com.proyectoV1.reservaSalones.services.implement;
 
-import com.proyectoV1.reservaSalones.domain.entities.Rol;
 import com.proyectoV1.reservaSalones.domain.entities.TelefonoSalon;
 import com.proyectoV1.reservaSalones.dto.TelefonoSalonDTO;
 import com.proyectoV1.reservaSalones.repositories.TelefonoSalonRepository;
@@ -24,6 +23,8 @@ public class TelefonoSalonServiceImpl implements TelefonoSalonService {
         this.telefonoSalonRepository = telefonoSalonRepository;
         this.telefonoSalonMapper = telefonoSalonMapper;
     }
+
+
     @Override
     @Transactional(readOnly = true)
     public List<TelefonoSalonDTO> listarTelefonoSalon() {
