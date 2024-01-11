@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UsuarioService {
-    List<Usuario> listarUsuario();
+    List<UsuarioDTO> listarUsuario();
 
     UsuarioDTO save(UsuarioDTO dto);
     Optional<UsuarioDTO> getUsuarioById(Long usuarioId);

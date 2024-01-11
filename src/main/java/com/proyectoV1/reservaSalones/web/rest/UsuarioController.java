@@ -20,7 +20,7 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
     @GetMapping
-    public ResponseEntity<List<Usuario>> listarUsuario() {
+    public ResponseEntity<List<UsuarioDTO>> listarUsuario() {
         return ResponseEntity.ok().body(usuarioService.listarUsuario());
     }
 

@@ -24,8 +24,10 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
     @Override
     @Transactional(readOnly = true)
-    public List<Usuario> listarUsuario() {
-        return usuarioRepository.findAll();
+    public List<UsuarioDTO> listarUsuario() {
+        return usuarioRepository.findAll()
+                .stream()
+                .map(usuarioMapper::toDto).collect(Collectors.toList());
     }
     @Override
     public UsuarioDTO save(UsuarioDTO dto) {

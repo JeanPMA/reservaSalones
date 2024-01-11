@@ -27,8 +27,7 @@ public class Usuario {
     private String correo;
     @Column(name = "estado", nullable = false)
     private Integer estado;
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
     @JoinColumn(name = "rol_id")
     private Rol rol;
 
