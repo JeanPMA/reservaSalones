@@ -16,7 +16,7 @@ create sequence tipo_solicitud_reserva_sequence as integer increment 1;
 
 -- crear tabla USUARIO
 CREATE TABLE "usuario" (
-  "id" integer PRIMARY KEY not null,
+  "id" bigint PRIMARY KEY not null,
   "usuario" varchar(100) not null UNIQUE,
   "password" varchar(100) not null,
   "telefono" integer not null,
@@ -36,7 +36,7 @@ CREATE TABLE "salon" (
   "direccion" varchar(255) not null,
   "capacidad" integer not null,
   "descripcion" varchar(100) not null,
-  "tarifa" varchar(100) not null,
+  "tarifa" integer not null,
   "estado" integer not null,
   "usuario_id" integer,
   "created_at" timestamp
@@ -46,7 +46,7 @@ ALTER TABLE "salon" ADD FOREIGN KEY ("usuario_id") REFERENCES "usuario" ("id") O
 
 -- crear tabla IMAGEN SALON
 CREATE TABLE "imagen_salon" (
-  "id" integer PRIMARY KEY not null,
+  "id" bigint PRIMARY KEY not null,
   "url" varchar(255) not null,
   "salon_id" integer
 );
@@ -56,7 +56,7 @@ ALTER TABLE "imagen_salon" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("sal
 
 -- crear tabla TELEFONO SALON
 CREATE TABLE "telefono_salon" (
-  "id" integer PRIMARY KEY not null,
+  "id" bigint PRIMARY KEY not null,
   "numero" integer not null UNIQUE,
   "salon_id" integer
 );
@@ -66,19 +66,20 @@ ALTER TABLE "telefono_salon" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("s
 
 -- crear tabla SOLICITUD RESERVA
 CREATE TABLE "solicitud_reserva" (
-  "id" integer PRIMARY KEY not null,
+  "id" bigint PRIMARY KEY not null,
   "detalle" varchar(255) not null,
-  "fecha_reserva" time not null,
-  "fecha_emision" time not null,
+  "fecha_reserva" date not null,
+  "fecha_emision" date not null,
   "motivo" varchar(100) not null,
   "salon_id" integer,
   "usuario_id" integer,
-  "tipoSR_id" integer
+  "tipo_sr_id" integer
 );
 create sequence solicitud_reserva_sequence as integer increment 1;
 ALTER TABLE "solicitud_reserva" ADD FOREIGN KEY ("salon_id") REFERENCES "salon" ("salon_id") ON DELETE restrict ON UPDATE restrict;
-ALTER TABLE "solicitud_reserva" ADD FOREIGN KEY ("tipoSR_id") REFERENCES "tipo_solicitud_reserva" ("id") ON DELETE restrict ON UPDATE restrict;
 ALTER TABLE "solicitud_reserva" ADD FOREIGN KEY ("usuario_id") REFERENCES "usuario" ("id") ON DELETE restrict ON UPDATE restrict;
+ALTER TABLE "solicitud_reserva" ADD FOREIGN KEY ("tipo_sr_id") REFERENCES "tipo_solicitud_reserva" ("id") ON DELETE restrict ON UPDATE restrict;
+
 
 -- crear tabla SERVICIO
 CREATE TABLE "servicio" (
@@ -93,7 +94,7 @@ create sequence servicio_sequence as integer increment 1;
 
 -- crear tabla SERVICIO SALON
 CREATE TABLE "servicio_salon" (
-  "id" SERIAL PRIMARY KEY not null,
+  "id" BIGSERIAL PRIMARY KEY not null,
   "salon_id" integer,
   "servicio_id" integer
 );

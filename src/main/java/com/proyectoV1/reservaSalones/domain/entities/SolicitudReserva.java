@@ -10,7 +10,7 @@ public class SolicitudReserva {
     @SequenceGenerator(name = "solicitud_reserva_sequence", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "solicitud_reserva_sequence")
     @Column(nullable = false)
-    private Integer id;
+    private Long id;
 
     @Column(name = "detalle", length = 255, nullable = false)
     private String detalle;
@@ -20,14 +20,14 @@ public class SolicitudReserva {
     private LocalDate fecha_emision;
     @Column(name = "motivo", length = 100, nullable = false)
     private String motivo;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "salon_id")
     private Salon salon;
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "tipoSR_id")
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "tipo_sr_id")
     private TipoSolicitudReserva tipoSR;
 
     public SolicitudReserva() {
@@ -43,11 +43,11 @@ public class SolicitudReserva {
         this.tipoSR = tipoSR;
     }
 
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

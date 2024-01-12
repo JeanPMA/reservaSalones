@@ -1,5 +1,6 @@
 package com.proyectoV1.reservaSalones.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.proyectoV1.reservaSalones.domain.entities.Rol;
 
 public class UsuarioDTO {
@@ -11,6 +12,7 @@ public class UsuarioDTO {
     private String apellido;
     private String correo;
     private Integer estado;
+    @JsonIgnoreProperties({"created_at"})
     private Rol rol;
 
     public UsuarioDTO() {
