@@ -3,6 +3,7 @@ package com.proyectoV1.reservaSalones.web.rest;
 import com.proyectoV1.reservaSalones.domain.entities.Usuario;
 import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.services.UsuarioService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -63,4 +64,17 @@ public class UsuarioController {
 
         return ResponseEntity.noContent().build();
     }
+    @PatchMapping("/{id}")
+    public ResponseEntity<UsuarioDTO> actualizarParcial(@RequestBody UsuarioDTO dto, @PathVariable final Long id) {
+        if (dto.getId() == null) {
+            throw new IllegalArgumentException("Invalid usuario id, valor nulo");
+        }
+        if (!Objects.equals(dto.getId(), id)) {
+            throw new IllegalArgumentException("Invalid id");
+        }
+        usuarioService.parcial(dto, id);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
+
 }

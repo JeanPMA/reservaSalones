@@ -2,6 +2,7 @@ package com.proyectoV1.reservaSalones.web.rest;
 
 import com.proyectoV1.reservaSalones.dto.ServicioDTO;
 import com.proyectoV1.reservaSalones.services.ServicioService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,5 +62,17 @@ public class ServicioController {
         servicioService.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("/{id}")
+    public ResponseEntity<ServicioDTO> actualizarParcial(@RequestBody ServicioDTO dto, @PathVariable final Integer id) {
+        if (dto.getId() == null) {
+            throw new IllegalArgumentException("Invalid servicio id, valor nulo");
+        }
+        if (!Objects.equals(dto.getId(), id)) {
+            throw new IllegalArgumentException("Invalid id");
+        }
+        servicioService.parcial(dto, id);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

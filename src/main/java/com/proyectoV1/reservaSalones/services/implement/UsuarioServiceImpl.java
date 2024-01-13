@@ -46,4 +46,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     public void delete(Long usuarioId) {
         usuarioRepository.deleteById(usuarioId);
     }
+    @Override
+    public Usuario parcial(UsuarioDTO dto, Long usuarioId){
+        Usuario usuario = usuarioRepository.findById(usuarioId)
+                .orElseThrow(() -> new RuntimeException("UsuarioRol no encontrado " + usuarioId));
+
+        if (dto.getEstado() != null) {
+            usuario.setEstado(dto.getEstado());
+        }
+        return usuarioRepository.save(usuario);
+    }
 }

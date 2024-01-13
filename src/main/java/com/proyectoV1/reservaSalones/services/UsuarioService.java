@@ -13,4 +13,5 @@ public interface UsuarioService {
     UsuarioDTO save(UsuarioDTO dto);
     Optional<UsuarioDTO> getUsuarioById(Long usuarioId);
     void delete(Long usuarioId);
+    Usuario parcial(UsuarioDTO dto, Long usuarioId);
 }

@@ -43,12 +43,22 @@ public class ServicioServiceImpl implements ServicioService {
 
     @Override
     @Transactional(readOnly = true)
-    public Optional<ServicioDTO> getServicioById(Integer tipoSRId) {
-        return servicioRepository.findById(tipoSRId).map(servicioMapper::toDto);
+    public Optional<ServicioDTO> getServicioById(Integer servicioId) {
+        return servicioRepository.findById(servicioId).map(servicioMapper::toDto);
     }
 
     @Override
-    public void delete(Integer tipoSRId) {
-        servicioRepository.deleteById(tipoSRId);
+    public void delete(Integer servicioId) {
+        servicioRepository.deleteById(servicioId);
+    }
+    @Override
+    public Servicio parcial(ServicioDTO dto, Integer servicioId){
+        Servicio servicio = servicioRepository.findById(servicioId)
+                .orElseThrow(() -> new RuntimeException("Servicio no encontrado " + servicioId));
+
+        if (dto.getEstado() != null) {
+            servicio.setEstado(dto.getEstado());
+        }
+        return servicioRepository.save(servicio);
     }
 }
