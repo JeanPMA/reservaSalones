@@ -1,30 +1,20 @@
-package com.proyectoV1.reservaSalones.domain.entities;
+package com.proyectoV1.reservaSalones.dto;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.proyectoV1.reservaSalones.domain.entities.Salon;
 
-@Entity
-@Table(name = "imagen_salon")
-public class ImagenSalon {
-    @Id
-    @SequenceGenerator(name = "imagen_salon_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "imagen_salon_sequence")
-    @Column(nullable = false)
+public class ImagenSalonDTO {
     private Long id;
-    @Column(name = "nombre", length = 255, nullable = false)
     private String nombre;
-    @Column(name = "imagen_id", length = 255, nullable = false)
     private String imagen_id;
-    @Column(name = "imagen_url", length = 255, nullable = false)
     private String imagen_url;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "salon_id")
+    @JsonIgnoreProperties({"direccion", "capacidad", "descripcion", "tarifa", "usuario","created_at"})
     private Salon salon;
 
-    public ImagenSalon() {
+    public ImagenSalonDTO() {
     }
 
-    public ImagenSalon(String nombre, String imagen_id, String imagen_url, Salon salon) {
+    public ImagenSalonDTO(String nombre, String imagen_id, String imagen_url, Salon salon) {
         this.nombre = nombre;
         this.imagen_id = imagen_id;
         this.imagen_url = imagen_url;
@@ -73,7 +63,7 @@ public class ImagenSalon {
 
     @Override
     public String toString() {
-        return "ImagenSalon{" +
+        return "ImagenSalonDTO{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", imagen_id='" + imagen_id + '\'' +

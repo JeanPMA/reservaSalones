@@ -36,6 +36,8 @@ CREATE TABLE "salon" (
   "direccion" varchar(255) not null,
   "capacidad" integer not null,
   "descripcion" varchar(100) not null,
+  "banner_id" varchar(255) not null,
+  "banner_url" varchar(255) not null,
   "tarifa" integer not null,
   "estado" integer not null,
   "usuario_id" integer,
@@ -47,7 +49,9 @@ ALTER TABLE "salon" ADD FOREIGN KEY ("usuario_id") REFERENCES "usuario" ("id") O
 -- crear tabla IMAGEN SALON
 CREATE TABLE "imagen_salon" (
   "id" bigint PRIMARY KEY not null,
-  "url" varchar(255) not null,
+  "nombre" varchar(255) not null,
+  "imagen_id" varchar(255) not null,
+  "imagen_url" varchar(255) not null,
   "salon_id" integer
 );
 create sequence imagen_salon_sequence as integer increment 1;
