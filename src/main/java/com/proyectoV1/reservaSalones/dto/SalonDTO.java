@@ -1,64 +1,30 @@
-package com.proyectoV1.reservaSalones.domain.entities;
+package com.proyectoV1.reservaSalones.dto;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.proyectoV1.reservaSalones.domain.entities.Servicio;
+import com.proyectoV1.reservaSalones.domain.entities.Usuario;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "salon")
-public class Salon {
-    @Id
-    @SequenceGenerator(name = "salon_sequence", allocationSize = 1)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "salon_sequence")
-    @Column(name = "salon_id", nullable = false)
+public class SalonDTO {
     private Integer id;
-
-    @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
-    @Column(name = "direccion", length = 255, nullable = false)
     private String direccion;
-    @Column(name = "capacidad", nullable = false)
     private Integer capacidad;
-    @Column(name = "descripcion", length = 255, nullable = false)
     private String descripcion;
-    @Column(name = "banner_id", length = 255, nullable = false)
     private String banner_id;
-    @Column(name = "banner_url", length = 255, nullable = false)
     private String banner_url;
-    @Column(name = "tarifa", length = 100, nullable = false)
     private Integer tarifa;
-    @Column(name = "estado", nullable = false)
     private Integer estado;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "usuario_id")
+    @JsonIgnoreProperties({"usuario","password","telefono","correo","rol"})
     private Usuario usuario;
-    @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime created_at;
-    @ManyToMany
-    @JsonBackReference
-    @JoinTable(name = "servicio_salon", joinColumns = @JoinColumn(name = "salon_id", referencedColumnName = "salon_id"),
-            inverseJoinColumns = @JoinColumn(name = "servicio_id", referencedColumnName = "servicio_id"))
+    @JsonIgnoreProperties({"detalle","created_at","salones"})
     private Set<Servicio> servicios = new HashSet<>();
 
-    public Salon() {
-    }
-
-    public Salon(String nombre, String direccion, Integer capacidad, String descripcion, String banner_id, String banner_url, Integer tarifa, Integer estado, Usuario usuario, LocalDateTime created_at, Set<Servicio> servicios) {
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.capacidad = capacidad;
-        this.descripcion = descripcion;
-        this.banner_id = banner_id;
-        this.banner_url = banner_url;
-        this.tarifa = tarifa;
-        this.estado = estado;
-        this.usuario = usuario;
-        this.created_at = created_at;
-        this.servicios = servicios;
+    public SalonDTO() {
     }
 
     public Integer getId() {
@@ -96,6 +62,11 @@ public class Salon {
     public String getDescripcion() {
         return descripcion;
     }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
     public String getBanner_id() {
         return banner_id;
     }
@@ -110,10 +81,6 @@ public class Salon {
 
     public void setBanner_url(String banner_url) {
         this.banner_url = banner_url;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
     }
 
     public Integer getTarifa() {
@@ -158,7 +125,7 @@ public class Salon {
 
     @Override
     public String toString() {
-        return "Salon{" +
+        return "SalonDTO{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
                 ", direccion='" + direccion + '\'' +

@@ -38,9 +38,9 @@ public class UsuarioController {
             throw new IllegalArgumentException("El usuario no puede tener ya un id ingresado.");
         }
 
-        UsuarioDTO UsuarioDTO = usuarioService.save(dto);
+        UsuarioDTO usuarioDTO = usuarioService.save(dto);
 
-        return ResponseEntity.created(new URI("/v1/usuario/" + UsuarioDTO.getId())).body(UsuarioDTO);
+        return ResponseEntity.created(new URI("/v1/usuario/" + usuarioDTO.getId())).body(usuarioDTO);
     }
 
     @PutMapping("/{id}")
