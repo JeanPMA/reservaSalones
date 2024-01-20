@@ -2,21 +2,28 @@ package com.proyectoV1.reservaSalones.web.rest;
 
 import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.Servicio;
+import com.proyectoV1.reservaSalones.dto.ImagenSalonDTO;
 import com.proyectoV1.reservaSalones.dto.SalonDTO;
 import com.proyectoV1.reservaSalones.services.SalonService;
+import com.proyectoV1.reservaSalones.services.implement.CloudinaryServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 @RestController
 @RequestMapping("/v1/salon")
 public class SalonController {
+    @Autowired
+    CloudinaryServiceImpl cloudinaryService;
     private final SalonService salonService;
 
     public SalonController(SalonService salonService) {
@@ -61,7 +68,9 @@ public class SalonController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable final Integer id) {
+    public ResponseEntity<Void> delete(@PathVariable final Integer id) throws IOException {
+        SalonDTO salonDTO = salonService.getSalonById(id).get();
+        Map result = cloudinaryService.delete(salonDTO.getBanner_id());
         salonService.delete(id);
 
         return ResponseEntity.noContent().build();
