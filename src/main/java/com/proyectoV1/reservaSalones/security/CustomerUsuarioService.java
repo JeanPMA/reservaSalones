@@ -1,15 +1,13 @@
-package com.proyectoV1.reservaSalones.jwt;
+package com.proyectoV1.reservaSalones.security;
 
 import com.proyectoV1.reservaSalones.domain.entities.Usuario;
 import com.proyectoV1.reservaSalones.repositories.UsuarioRepository;
-import com.proyectoV1.reservaSalones.services.UsuarioService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.Objects;
-
+/*
 @Slf4j
 @Service
 public class CustomerUsuarioService {
@@ -27,4 +25,4 @@ public class CustomerUsuarioService {
             throw new RuntimeException();
         }
     }
-}
+}*/
