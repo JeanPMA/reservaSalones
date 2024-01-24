@@ -5,17 +5,19 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.security.Key;
 import java.util.*;
 import java.util.function.Function;
 
 @Service
 public class JwtUtil {
-    private static final String ACCESS_TOKEN_SECRET = "jeanpool12345678clavesecretaa";
+    private static final String ACCESS_TOKEN_SECRET = "AH7VlcnfzKzL7E2IZNyMl+3PtnDhprsZJz2xwjMB+SFSumnSbko863lmqG8IjQwn";
     private static final Long ACCESS_TOKEN_VALIDITY_SECONDS = 2_592_000L;
 
     public static String createToken(String nombre, String email){
@@ -47,4 +49,36 @@ public class JwtUtil {
         }
     }
 
+    // Validar el token de acceso
+    public boolean isTokenValid(String token){
+        try{
+            Jwts.parser()
+                    .setSigningKey(getSignatureKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
+            return true;
+        }catch (Exception e){
+            return false;
+        }
+    }
+
+    public Key getSignatureKey(){
+        byte[] keyBytes = Decoders.BASE64.decode(ACCESS_TOKEN_SECRET);
+        return Keys.hmacShaKeyFor(keyBytes);
+    }
+    public String getUsernameFromToken(String token){
+        return getClaim(token, Claims::getSubject);
+    }
+    public <T> T getClaim(String token, Function<Claims, T> claimsTFunction){
+        Claims claims = extractAllClaims(token);
+        return claimsTFunction.apply(claims);
+    }
+    public Claims extractAllClaims(String token){
+        return Jwts.parser()
+                .setSigningKey(getSignatureKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 }
