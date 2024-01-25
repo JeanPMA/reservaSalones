@@ -9,6 +9,7 @@ import com.proyectoV1.reservaSalones.services.implement.CloudinaryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -30,11 +31,13 @@ public class SalonController {
         this.salonService = salonService;
     }
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<SalonDTO>> listarUsuario() {
         return ResponseEntity.ok().body(salonService.listarSalon());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<SalonDTO> getSalonById(@PathVariable final Integer id) {
         return ResponseEntity
                 .ok()
@@ -42,6 +45,7 @@ public class SalonController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<SalonDTO> create(@RequestParam MultipartFile multipartFile, @RequestBody final SalonDTO dto) throws URISyntaxException, IOException {
         BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
         if (dto.getId() != null) {
@@ -56,7 +60,8 @@ public class SalonController {
     }
 
     @PutMapping("/{id}")
-    public SalonDTO editUsuario(@RequestParam MultipartFile multipartFile, @RequestBody final SalonDTO dto,
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
+    public SalonDTO editSalon(@RequestParam MultipartFile multipartFile, @RequestBody final SalonDTO dto,
                                                   @PathVariable final Integer id) throws URISyntaxException, IOException {
         if (dto.getId() == null) {
             throw new IllegalArgumentException("Invalid salon id, valor nulo");
@@ -94,6 +99,7 @@ public class SalonController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable final Integer id) throws IOException {
         SalonDTO salonDTO = salonService.getSalonById(id).get();
         Map result = cloudinaryService.delete(salonDTO.getBanner_id());
@@ -102,6 +108,7 @@ public class SalonController {
         return ResponseEntity.noContent().build();
     }
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<Salon> actualizarParcial(@RequestBody Salon dto, @PathVariable final Integer id) {
         if (dto.getId() == null) {
             throw new IllegalArgumentException("Invalid salon id, valor nulo");

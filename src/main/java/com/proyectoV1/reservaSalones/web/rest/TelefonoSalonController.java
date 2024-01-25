@@ -3,6 +3,7 @@ package com.proyectoV1.reservaSalones.web.rest;
 import com.proyectoV1.reservaSalones.dto.TelefonoSalonDTO;
 import com.proyectoV1.reservaSalones.services.TelefonoSalonService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -19,11 +20,13 @@ public class TelefonoSalonController {
         this.telefonoSalonService = telefonoSalonService;
     }
     @GetMapping
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<List<TelefonoSalonDTO>> listarTelefonoSalon() {
         return ResponseEntity.ok().body(telefonoSalonService.listarTelefonoSalon());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<TelefonoSalonDTO> getTelefonoById(@PathVariable final Long id) {
         return ResponseEntity
                 .ok()
@@ -31,6 +34,7 @@ public class TelefonoSalonController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<TelefonoSalonDTO> create(@RequestBody final TelefonoSalonDTO dto) throws URISyntaxException {
         if (dto.getId() != null) {
             throw new IllegalArgumentException("El telefono-salon no puede tener ya un id ingresado.");
@@ -42,6 +46,7 @@ public class TelefonoSalonController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<TelefonoSalonDTO> editTelefono(@RequestBody final TelefonoSalonDTO dto,
                                           @PathVariable final Long id) throws URISyntaxException {
         if (dto.getId() == null) {
@@ -57,6 +62,7 @@ public class TelefonoSalonController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<Void> delete(@PathVariable final Long id) {
         telefonoSalonService.delete(id);
 

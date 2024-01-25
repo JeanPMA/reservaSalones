@@ -4,6 +4,7 @@ import com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO;
 import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.services.SolicitudReservaService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -20,10 +21,12 @@ public class SolicitudReservaController {
         this.solicitudReservaService = solicitudReservaService;
     }
     @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','USER','OWNER')")
     public ResponseEntity<List<SolicitudReservaDTO>> listarSolicitudReserva() {
         return ResponseEntity.ok().body(solicitudReservaService.listarSolicitudReserva());
     }
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER','OWNER')")
     public ResponseEntity<SolicitudReservaDTO> getSolicitudById(@PathVariable final Long id) {
         return ResponseEntity
                 .ok()
@@ -31,6 +34,7 @@ public class SolicitudReservaController {
     }
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<SolicitudReservaDTO> create(@RequestBody final SolicitudReservaDTO dto) throws URISyntaxException {
         if (dto.getId() != null) {
             throw new IllegalArgumentException("La solicitud-reserva no puede tener ya un id ingresado.");
@@ -42,7 +46,8 @@ public class SolicitudReservaController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<SolicitudReservaDTO> editUsuario(@RequestBody final SolicitudReservaDTO dto,
+    @PreAuthorize("hasAnyRole('ADMIN','USER','OWNER')")
+    public ResponseEntity<SolicitudReservaDTO> editSolicitud(@RequestBody final SolicitudReservaDTO dto,
                                                   @PathVariable final Long id) throws URISyntaxException {
         if (dto.getId() == null) {
             throw new IllegalArgumentException("Invalid solicitud-reserva id, valor nulo");
@@ -57,6 +62,7 @@ public class SolicitudReservaController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<Void> delete(@PathVariable final Long id) {
         solicitudReservaService.delete(id);
 

@@ -3,6 +3,7 @@ package com.proyectoV1.reservaSalones.web.rest;
 import com.proyectoV1.reservaSalones.dto.TipoSolicitudReservaDTO;
 import com.proyectoV1.reservaSalones.services.TipoSolicitudReservaService;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -20,11 +21,13 @@ public class TipoSolicitudReservaController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<TipoSolicitudReservaDTO>> listarTipoSR() {
         return ResponseEntity.ok().body(tipoSolicitudReservaService.listarTipoSR());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TipoSolicitudReservaDTO> getTipoSRById(@PathVariable final Integer id) {
         return ResponseEntity
                 .ok()
@@ -32,6 +35,7 @@ public class TipoSolicitudReservaController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TipoSolicitudReservaDTO> create(@RequestBody final TipoSolicitudReservaDTO dto) throws URISyntaxException {
         if (dto.getId() != null) {
             throw new IllegalArgumentException("Tipo solicitud-reserva no puede tener ya un id ingresado.");
@@ -43,6 +47,7 @@ public class TipoSolicitudReservaController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TipoSolicitudReservaDTO> editRol(@RequestBody final TipoSolicitudReservaDTO dto,
                                           @PathVariable final Integer id) throws URISyntaxException {
         if (dto.getId() == null) {
@@ -58,6 +63,7 @@ public class TipoSolicitudReservaController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable final Integer id) {
         tipoSolicitudReservaService.delete(id);
 

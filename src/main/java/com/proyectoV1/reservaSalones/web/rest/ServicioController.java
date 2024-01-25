@@ -4,6 +4,7 @@ import com.proyectoV1.reservaSalones.dto.ServicioDTO;
 import com.proyectoV1.reservaSalones.services.ServicioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -20,11 +21,13 @@ public class ServicioController {
         this.servicioService = servicioService;
     }
     @GetMapping
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<List<ServicioDTO>> listarServicio() {
         return ResponseEntity.ok().body(servicioService.listarServicio());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ServicioDTO> getServicioById(@PathVariable final Integer id) {
         return ResponseEntity
                 .ok()
@@ -32,6 +35,7 @@ public class ServicioController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ServicioDTO> create(@RequestBody final ServicioDTO dto) throws URISyntaxException {
         if (dto.getId() != null) {
             throw new IllegalArgumentException("El servicio no puede tener ya un id ingresado.");
@@ -43,6 +47,7 @@ public class ServicioController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ServicioDTO> editServicio(@RequestBody final ServicioDTO dto,
                                                            @PathVariable final Integer id) throws URISyntaxException {
         if (dto.getId() == null) {
@@ -58,12 +63,14 @@ public class ServicioController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable final Integer id) {
         servicioService.delete(id);
 
         return ResponseEntity.noContent().build();
     }
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ServicioDTO> actualizarParcial(@RequestBody ServicioDTO dto, @PathVariable final Integer id) {
         if (dto.getId() == null) {
             throw new IllegalArgumentException("Invalid servicio id, valor nulo");

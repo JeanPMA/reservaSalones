@@ -10,6 +10,7 @@ import com.proyectoV1.reservaSalones.services.implement.CloudinaryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -34,16 +35,19 @@ public class ImagenSalonController {
         this.imagenSalonService = imagenSalonService;
     }
     @GetMapping
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<List<ImagenSalonDTO>> listarImagenes() {
         return ResponseEntity.ok().body(imagenSalonService.listarImagenes());
     }
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<ImagenSalonDTO> getImagenSalonById(@PathVariable final Long id) {
         return ResponseEntity
                 .ok()
                 .body(imagenSalonService.getImagenById(id).orElseThrow(() -> new IllegalArgumentException("Recurso no encontrado: " + id)));
     }
     @PostMapping
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<ImagenSalonDTO> crear(@RequestParam MultipartFile multipartFile, @RequestParam Long idSalon) throws IOException, URISyntaxException {
         BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
         if (bufferedImage == null){
@@ -62,6 +66,7 @@ public class ImagenSalonController {
         return ResponseEntity.created(new URI("/v1/imagen-salon/" + imagenSalonDTO.getId())).body(imagenSalonDTO);
     }
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('OWNER')")
     public ResponseEntity<Map> eliminar(@PathVariable("id") Long id) throws IOException{
         ImagenSalonDTO imagenSalonDTO = imagenSalonService.getImagenById(id).get();
         Map result = cloudinaryService.delete(imagenSalonDTO.getImagen_id());

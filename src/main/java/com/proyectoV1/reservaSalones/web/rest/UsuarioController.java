@@ -5,6 +5,7 @@ import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -21,11 +22,13 @@ public class UsuarioController {
         this.usuarioService = usuarioService;
     }
     @GetMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UsuarioDTO>> listarUsuario() {
         return ResponseEntity.ok().body(usuarioService.listarUsuario());
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<UsuarioDTO> getUsuarioById(@PathVariable final Long id) {
         return ResponseEntity
                 .ok()
@@ -33,6 +36,7 @@ public class UsuarioController {
     }
 
     @PostMapping
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UsuarioDTO> create(@RequestBody final UsuarioDTO dto) throws URISyntaxException {
         if (dto.getId() != null) {
             throw new IllegalArgumentException("El usuario no puede tener ya un id ingresado.");
@@ -44,6 +48,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('OWNER','ADMIN')")
     public ResponseEntity<UsuarioDTO> editUsuario(@RequestBody final UsuarioDTO dto,
                                                     @PathVariable final Long id) throws URISyntaxException {
         if (dto.getId() == null) {
@@ -59,12 +64,14 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable final Long id) {
         usuarioService.delete(id);
 
         return ResponseEntity.noContent().build();
     }
     @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<UsuarioDTO> actualizarParcial(@RequestBody UsuarioDTO dto, @PathVariable final Long id) {
         if (dto.getId() == null) {
             throw new IllegalArgumentException("Invalid usuario id, valor nulo");
