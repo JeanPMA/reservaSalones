@@ -17,7 +17,7 @@ create sequence tipo_solicitud_reserva_sequence as integer increment 1;
 -- crear tabla USUARIO
 CREATE TABLE "usuario" (
   "id" bigint PRIMARY KEY not null,
-  "usuario" varchar(100) not null UNIQUE,
+  "username" varchar(100) not null UNIQUE,
   "password" varchar(100) not null,
   "telefono" integer not null,
   "nombre" varchar(100) not null,

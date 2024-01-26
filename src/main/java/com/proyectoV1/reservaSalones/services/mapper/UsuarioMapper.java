@@ -10,7 +10,7 @@ public class UsuarioMapper implements CustomMapper<UsuarioDTO, Usuario>{
     public UsuarioDTO toDto(Usuario usuario) {
         UsuarioDTO usuarioDTO = new UsuarioDTO();
         usuarioDTO.setId(usuario.getId());
-        usuarioDTO.setUsuario(usuario.getUsuario());
+        usuarioDTO.setUsername(usuario.getUsername());
         usuarioDTO.setPassword(usuario.getPassword());
         usuarioDTO.setTelefono(usuario.getTelefono());
         usuarioDTO.setNombre(usuario.getNombre());
@@ -25,7 +25,7 @@ public class UsuarioMapper implements CustomMapper<UsuarioDTO, Usuario>{
     public Usuario toEntity(UsuarioDTO usuarioDTO) {
         Usuario usuario = new Usuario();
         usuario.setId(usuarioDTO.getId());
-        usuario.setUsuario(usuarioDTO.getUsuario());
+        usuario.setUsername(usuarioDTO.getUsername());
         usuario.setPassword(usuarioDTO.getPassword());
         usuario.setTelefono(usuarioDTO.getTelefono());
         usuario.setNombre(usuarioDTO.getNombre());

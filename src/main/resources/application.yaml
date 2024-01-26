@@ -10,3 +10,8 @@ jwt:
     key: AH7VlcnfzKzL7E2IZNyMl+3PtnDhprsZJz2xwjMB+SFSumnSbko863lmqG8IjQwn
   time:
     expiration: 86400000
+logging:
+  level:
+    org.springframework.web.cors: DEBUG
+    org.springframework.security.web.FilterChainProxy: DEBUG
+    org.apache.catalina.filters.CorsFilter: DEBUG

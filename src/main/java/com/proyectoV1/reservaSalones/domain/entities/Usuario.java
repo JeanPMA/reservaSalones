@@ -1,10 +1,6 @@
 package com.proyectoV1.reservaSalones.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "usuario")
@@ -14,8 +10,8 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "usuario_sequence")
     @Column(nullable = false)
     private Long id;
-    @Column(name = "usuario", length = 100, nullable = false)
-    private String usuario;
+    @Column(name = "username", length = 100, nullable = false)
+    private String username;
     @Column(name = "password", length = 100, nullable = false)
     private String password;
     @Column(name = "telefono", nullable = false)
@@ -35,8 +31,8 @@ public class Usuario {
     public Usuario() {
     }
 
-    public Usuario(String usuario, String password, Integer telefono, String nombre, String apellido, String correo, Integer estado, Rol rol) {
-        this.usuario = usuario;
+    public Usuario(String username, String password, Integer telefono, String nombre, String apellido, String correo, Integer estado, Rol rol) {
+        this.username = username;
         this.password = password;
         this.telefono = telefono;
         this.nombre = nombre;
@@ -54,12 +50,12 @@ public class Usuario {
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -121,7 +117,7 @@ public class Usuario {
     public String toString() {
         return "Usuario{" +
                 "id=" + id +
-                ", usuario='" + usuario + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", nombre='" + nombre + '\'' +

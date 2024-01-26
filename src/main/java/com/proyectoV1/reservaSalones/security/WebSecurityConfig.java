@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfig {
+public class WebSecurityConfig{
     @Autowired
     JwtUtil jwtUtil;
     @Autowired
@@ -39,7 +39,7 @@ public class WebSecurityConfig {
 
         return  http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
-                    auth.requestMatchers("/v1/hello").permitAll();
+                    auth.requestMatchers("/login").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -69,5 +69,9 @@ public class WebSecurityConfig {
     PasswordEncoder passwordEncoder(){
         return  new BCryptPasswordEncoder();
     }
+
+    /*public static void main(String[] args){
+        System.out.println("pass: " + new BCryptPasswordEncoder().encode("hola"));
+    }*/
 
 }

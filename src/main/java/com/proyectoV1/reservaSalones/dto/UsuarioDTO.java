@@ -5,7 +5,7 @@ import com.proyectoV1.reservaSalones.domain.entities.Rol;
 
 public class UsuarioDTO {
     private Long id;
-    private String usuario;
+    private String username;
     private String password;
     private Integer telefono;
     private String nombre;
@@ -26,12 +26,12 @@ public class UsuarioDTO {
         this.id = id;
     }
 
-    public String getUsuario() {
-        return usuario;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUsuario(String usuario) {
-        this.usuario = usuario;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -94,7 +94,7 @@ public class UsuarioDTO {
     public String toString() {
         return "UsuarioDTO{" +
                 "id=" + id +
-                ", usuario='" + usuario + '\'' +
+                ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
                 ", telefono='" + telefono + '\'' +
                 ", nombre='" + nombre + '\'' +

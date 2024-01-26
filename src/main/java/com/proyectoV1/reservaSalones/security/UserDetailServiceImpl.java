@@ -23,7 +23,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String usuario) throws UsernameNotFoundException{
         Usuario usuario1 = usuarioRepository
-                .findOneByUsuario(usuario)
+                .findOneByUsername(usuario)
                 .orElseThrow(() -> new UsernameNotFoundException("El usuario con nombre " + usuario + "no existe."));
 
         GrantedAuthority authority = new SimpleGrantedAuthority("ROLE_" + usuario1.getRol().getNombre());

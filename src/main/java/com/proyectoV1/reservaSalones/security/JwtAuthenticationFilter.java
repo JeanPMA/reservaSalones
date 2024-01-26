@@ -17,7 +17,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,7 +26,10 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
     public JwtAuthenticationFilter(JwtUtil jwtUtil){
         this.jwtUtil = jwtUtil;
     }
-   @Override
+
+
+
+    @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response){
 
        Usuario usuario = null;
@@ -35,7 +37,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
        String password = "";
        try{
            usuario = new ObjectMapper().readValue(request.getInputStream(), Usuario.class);
-           username = usuario.getUsuario();
+           username = usuario.getUsername();
            password = usuario.getPassword();
        } catch (StreamReadException e) {
            throw new RuntimeException(e);
