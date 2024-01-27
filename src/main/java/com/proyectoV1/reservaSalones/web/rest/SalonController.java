@@ -31,7 +31,7 @@ public class SalonController {
         this.salonService = salonService;
     }
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<SalonDTO>> listarUsuario() {
         return ResponseEntity.ok().body(salonService.listarSalon());
     }

@@ -3,6 +3,7 @@ package com.proyectoV1.reservaSalones.security;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.Customizer;
@@ -40,6 +41,7 @@ public class WebSecurityConfig{
         return  http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/v1/salon").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
