@@ -40,7 +40,7 @@ public class SalonController {
         return ResponseEntity.ok().body(salonService.listarSalon());
     }
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN','USER')")
     public ResponseEntity<SalonDTO> getSalonById(@PathVariable final Integer id) {
         return ResponseEntity
                 .ok()
