@@ -30,12 +30,15 @@ public class SalonController {
     public SalonController(SalonService salonService) {
         this.salonService = salonService;
     }
-    @GetMapping
-    //@PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<List<SalonDTO>> listarUsuario() {
+    @GetMapping("/recomendado")
+    public ResponseEntity<List<SalonDTO>> listarSalonRecomendado() {
         return ResponseEntity.ok().body(salonService.listarSalon());
     }
-
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    public ResponseEntity<List<SalonDTO>> listarSalon() {
+        return ResponseEntity.ok().body(salonService.listarSalon());
+    }
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<SalonDTO> getSalonById(@PathVariable final Integer id) {
