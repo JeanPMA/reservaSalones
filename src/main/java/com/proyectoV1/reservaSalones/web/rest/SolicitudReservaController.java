@@ -35,12 +35,12 @@ public class SolicitudReservaController {
 
     @PostMapping
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
-    public ResponseEntity<SolicitudReservaDTO> create(@RequestBody final SolicitudReservaDTO dto) throws URISyntaxException {
+    public ResponseEntity<SolicitudReservaDTO> create(@RequestBody final SolicitudReservaDTO dto, @RequestParam String username) throws URISyntaxException {
         if (dto.getId() != null) {
             throw new IllegalArgumentException("La solicitud-reserva no puede tener ya un id ingresado.");
         }
 
-        SolicitudReservaDTO SolicitudReservaDTO = solicitudReservaService.save(dto);
+        SolicitudReservaDTO SolicitudReservaDTO = solicitudReservaService.save(dto, username);
 
         return ResponseEntity.created(new URI("/v1/solicitud-reserva/" + SolicitudReservaDTO.getId())).body(SolicitudReservaDTO);
     }
@@ -48,7 +48,8 @@ public class SolicitudReservaController {
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('ADMIN','USER','OWNER')")
     public ResponseEntity<SolicitudReservaDTO> editSolicitud(@RequestBody final SolicitudReservaDTO dto,
-                                                  @PathVariable final Long id) throws URISyntaxException {
+                                                             @PathVariable final Long id,
+                                                             @RequestParam String username) throws URISyntaxException {
         if (dto.getId() == null) {
             throw new IllegalArgumentException("Invalid solicitud-reserva id, valor nulo");
         }
@@ -58,7 +59,7 @@ public class SolicitudReservaController {
 
         return ResponseEntity
                 .ok()
-                .body(this.solicitudReservaService.save(dto));
+                .body(this.solicitudReservaService.save(dto, username));
     }
 
     @DeleteMapping("/{id}")

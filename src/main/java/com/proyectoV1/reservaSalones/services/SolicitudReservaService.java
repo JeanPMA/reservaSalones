@@ -9,7 +9,7 @@ import java.util.Optional;
 public interface SolicitudReservaService {
     List<SolicitudReservaDTO> listarSolicitudReserva();
 
-    SolicitudReservaDTO save(SolicitudReservaDTO dto);
+    SolicitudReservaDTO save(SolicitudReservaDTO dto, String username);
     Optional<SolicitudReservaDTO> getSolicitudById(Long solicitudId);
     void delete(Long solicitudId);
 }
