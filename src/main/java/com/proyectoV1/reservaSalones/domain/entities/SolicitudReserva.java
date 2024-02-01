@@ -18,6 +18,8 @@ public class SolicitudReserva {
     private LocalDate fecha_reserva;
     @Column(name = "fecha_emision", columnDefinition = "DATE", nullable = false)
     private LocalDate fecha_emision;
+    @Column(name = "servicio", length = 255, nullable = false)
+    private String servicio;
     @Column(name = "motivo", length = 100, nullable = false)
     private String motivo;
     @ManyToOne(fetch = FetchType.EAGER)
@@ -33,14 +35,16 @@ public class SolicitudReserva {
     public SolicitudReserva() {
     }
 
-    public SolicitudReserva(String detalle, LocalDate fecha_reserva, LocalDate fecha_emision, String motivo, Salon salon, Usuario usuario, TipoSolicitudReserva tipoSR) {
+    public SolicitudReserva(String detalle, LocalDate fecha_reserva, LocalDate fecha_emision, String servicio, String motivo, Salon salon, Usuario usuario, TipoSolicitudReserva tipoSR) {
         this.detalle = detalle;
         this.fecha_reserva = fecha_reserva;
         this.fecha_emision = fecha_emision;
+        this.servicio = servicio;
         this.motivo = motivo;
         this.salon = salon;
         this.usuario = usuario;
         this.tipoSR = tipoSR;
+        this.tipoSR.setNombre("PENDIENTE");
     }
 
     public Long getId() {
@@ -73,6 +77,14 @@ public class SolicitudReserva {
 
     public void setFecha_emision(LocalDate fecha_emision) {
         this.fecha_emision = fecha_emision;
+    }
+
+    public String getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(String servicio) {
+        this.servicio = servicio;
     }
 
     public String getMotivo() {
@@ -114,6 +126,7 @@ public class SolicitudReserva {
                 ", detalle='" + detalle + '\'' +
                 ", fecha_reserva=" + fecha_reserva +
                 ", fecha_emision=" + fecha_emision +
+                ", servicio='" + servicio + '\'' +
                 ", motivo='" + motivo + '\'' +
                 ", salon=" + salon +
                 ", usuario=" + usuario +

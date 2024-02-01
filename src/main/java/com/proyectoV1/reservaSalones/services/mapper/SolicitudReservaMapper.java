@@ -13,6 +13,7 @@ public class SolicitudReservaMapper implements CustomMapper<SolicitudReservaDTO,
         solicitudReservaDTO.setDetalle(solicitudReserva.getDetalle());
         solicitudReservaDTO.setFecha_reserva(solicitudReserva.getFecha_reserva());
         solicitudReservaDTO.setFecha_emision(solicitudReserva.getFecha_emision());
+        solicitudReservaDTO.setServicio(solicitudReserva.getServicio());
         solicitudReservaDTO.setMotivo(solicitudReserva.getMotivo());
         solicitudReservaDTO.setSalon(solicitudReserva.getSalon());
         solicitudReservaDTO.setUsuario(solicitudReserva.getUsuario());
@@ -27,6 +28,7 @@ public class SolicitudReservaMapper implements CustomMapper<SolicitudReservaDTO,
         solicitudReserva.setDetalle(solicitudReservaDTO.getDetalle());
         solicitudReserva.setFecha_reserva(solicitudReservaDTO.getFecha_reserva());
         solicitudReserva.setFecha_emision(solicitudReservaDTO.getFecha_emision());
+        solicitudReserva.setServicio(solicitudReservaDTO.getServicio());
         solicitudReserva.setMotivo(solicitudReservaDTO.getMotivo());
         solicitudReserva.setSalon(solicitudReservaDTO.getSalon());
         solicitudReserva.setUsuario(solicitudReservaDTO.getUsuario());

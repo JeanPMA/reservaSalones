@@ -45,7 +45,6 @@ public class SolicitudReservaServiceImpl implements SolicitudReservaService {
         if (optionalUsuario.isPresent()) {
             solicitudReserva.setUsuario(optionalUsuario.get());
         } else {
-            // Manejar el caso en que no se encuentre el usuario (lanzar excepción, log, etc.)
             throw new RuntimeException("Usuario no encontrado: " + username);
         }
 

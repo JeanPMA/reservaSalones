@@ -12,6 +12,7 @@ public class SolicitudReservaDTO {
     private String detalle;
     private LocalDate fecha_reserva;
     private LocalDate fecha_emision;
+    private String servicio;
     private String motivo;
     @JsonIgnoreProperties({"usuario","created_at"})
     private Salon salon;
@@ -53,6 +54,14 @@ public class SolicitudReservaDTO {
 
     public void setFecha_emision(LocalDate fecha_emision) {
         this.fecha_emision = fecha_emision;
+    }
+
+    public String getServicio() {
+        return servicio;
+    }
+
+    public void setServicio(String servicio) {
+        this.servicio = servicio;
     }
 
     public String getMotivo() {
