@@ -38,7 +38,7 @@ public class SolicitudReservaServiceImpl implements SolicitudReservaService {
     public SolicitudReservaDTO save(SolicitudReservaDTO dto, String username) {
         SolicitudReserva solicitudReserva = solicitudReservaMapper.toEntity(dto);
         if (solicitudReserva.getFecha_emision() == null) {
-            solicitudReserva.setFecha_reserva(LocalDate.now());
+            solicitudReserva.setFecha_emision(LocalDate.now());
         }
         Optional<Usuario> optionalUsuario = usuarioRepository.findOneByUsername(username);
 
