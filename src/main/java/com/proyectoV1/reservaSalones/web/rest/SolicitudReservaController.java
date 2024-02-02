@@ -1,5 +1,6 @@
 package com.proyectoV1.reservaSalones.web.rest;
 
+import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO;
 import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.services.SolicitudReservaService;
@@ -21,7 +22,7 @@ public class SolicitudReservaController {
         this.solicitudReservaService = solicitudReservaService;
     }
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','USER','OWNER')")
+    @PreAuthorize("hasAnyRole('ADMIN','OWNER')")
     public ResponseEntity<List<SolicitudReservaDTO>> listarSolicitudReserva() {
         return ResponseEntity.ok().body(solicitudReservaService.listarSolicitudReserva());
     }
@@ -68,5 +69,10 @@ public class SolicitudReservaController {
         solicitudReservaService.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+    @GetMapping("/buzon")
+    @PreAuthorize("hasRole('USER')")
+    public List<SolicitudReserva> listarParaUsuarios() {
+        return solicitudReservaService.findByTipoSRNotNombre();
     }
 }

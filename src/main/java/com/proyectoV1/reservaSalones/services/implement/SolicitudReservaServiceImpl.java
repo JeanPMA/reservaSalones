@@ -1,9 +1,11 @@
 package com.proyectoV1.reservaSalones.services.implement;
 
 import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
+import com.proyectoV1.reservaSalones.domain.entities.TipoSolicitudReserva;
 import com.proyectoV1.reservaSalones.domain.entities.Usuario;
 import com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO;
 import com.proyectoV1.reservaSalones.repositories.SolicitudReservaRepository;
+import com.proyectoV1.reservaSalones.repositories.TipoSolicitudReservaRepository;
 import com.proyectoV1.reservaSalones.repositories.UsuarioRepository;
 import com.proyectoV1.reservaSalones.services.SolicitudReservaService;
 import com.proyectoV1.reservaSalones.services.mapper.SolicitudReservaMapper;
@@ -21,11 +23,13 @@ public class SolicitudReservaServiceImpl implements SolicitudReservaService {
     private final SolicitudReservaRepository solicitudReservaRepository;
     private final SolicitudReservaMapper solicitudReservaMapper;
     private final UsuarioRepository usuarioRepository;
+    private final TipoSolicitudReservaRepository tipoSolicitudReservaRepository;
 
-    public SolicitudReservaServiceImpl(SolicitudReservaRepository solicitudReservaRepository, SolicitudReservaMapper solicitudReservaMapper, UsuarioRepository usuarioRepository) {
+    public SolicitudReservaServiceImpl(SolicitudReservaRepository solicitudReservaRepository, SolicitudReservaMapper solicitudReservaMapper, UsuarioRepository usuarioRepository, TipoSolicitudReservaRepository tipoSolicitudReservaRepository) {
         this.solicitudReservaRepository = solicitudReservaRepository;
         this.solicitudReservaMapper = solicitudReservaMapper;
         this.usuarioRepository = usuarioRepository;
+        this.tipoSolicitudReservaRepository = tipoSolicitudReservaRepository;
     }
     @Override
     @Transactional(readOnly = true)
@@ -61,5 +65,17 @@ public class SolicitudReservaServiceImpl implements SolicitudReservaService {
     @Override
     public void delete(Long solicitudId) {
         solicitudReservaRepository.deleteById(solicitudId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<SolicitudReserva> findByTipoSRNotNombre() {
+        Optional<TipoSolicitudReserva> estadoInvisible = tipoSolicitudReservaRepository.findByNombre("INVISIBLE");
+
+        if (estadoInvisible.isPresent()) {
+            return solicitudReservaRepository.findByTipoSRNombreNot(estadoInvisible.get().getNombre());
+        } else {
+            throw new RuntimeException("NO EXISTE EL TIPO SR");
+        }
     }
 }
