@@ -21,7 +21,7 @@ public class TipoSolicitudReservaController {
     }
 
     @GetMapping
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAnyRole('ADMIN','USER','OWNER')")
     public ResponseEntity<List<TipoSolicitudReservaDTO>> listarTipoSR() {
         return ResponseEntity.ok().body(tipoSolicitudReservaService.listarTipoSR());
     }
