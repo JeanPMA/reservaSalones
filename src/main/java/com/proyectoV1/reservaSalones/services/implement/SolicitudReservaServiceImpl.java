@@ -52,6 +52,13 @@ public class SolicitudReservaServiceImpl implements SolicitudReservaService {
             throw new RuntimeException("Usuario no encontrado: " + username);
         }
 
+        Optional<TipoSolicitudReserva> tipoSolicitudPendiente = tipoSolicitudReservaRepository.findByNombre("PENDIENTE");
+
+        if (tipoSolicitudPendiente.isPresent()) {
+            solicitudReserva.setTipoSR(tipoSolicitudPendiente.get());
+        } else {
+            throw new RuntimeException("No se pudo encontrar el tipo de solicitud con nombre 'PENDIENTE'");
+        }
         solicitudReserva = solicitudReservaRepository.save(solicitudReserva);
         return solicitudReservaMapper.toDto(solicitudReserva);
     }
@@ -69,13 +76,13 @@ public class SolicitudReservaServiceImpl implements SolicitudReservaService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<SolicitudReserva> findByTipoSRNotNombre() {
+    public List<SolicitudReserva> findByTipoSRNotNombre(String username) {
         Optional<TipoSolicitudReserva> estadoInvisible = tipoSolicitudReservaRepository.findByNombre("INVISIBLE");
 
         if (estadoInvisible.isPresent()) {
-            return solicitudReservaRepository.findByTipoSRNombreNot(estadoInvisible.get().getNombre());
+            return solicitudReservaRepository.findByTipoSRNombreNotAndUsuarioUsername(estadoInvisible.get().getNombre(), username);
         } else {
-            throw new RuntimeException("NO EXISTE EL TIPO SR");
+            throw new RuntimeException("ERROR AL OBTENER DATOS");
         }
     }
 }

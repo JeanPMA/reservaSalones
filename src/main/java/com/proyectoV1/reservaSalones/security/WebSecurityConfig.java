@@ -41,7 +41,7 @@ public class WebSecurityConfig{
         return  http.csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").permitAll();
-                    auth.requestMatchers(HttpMethod.GET, "/v1/salon").permitAll();
+                    auth.requestMatchers(HttpMethod.GET, "/v1/salon/recomendado").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))

@@ -14,5 +14,5 @@ public interface SolicitudReservaService {
     Optional<SolicitudReservaDTO> getSolicitudById(Long solicitudId);
     void delete(Long solicitudId);
 
-    List<SolicitudReserva> findByTipoSRNotNombre();
+    List<SolicitudReserva> findByTipoSRNotNombre(String username);
 }

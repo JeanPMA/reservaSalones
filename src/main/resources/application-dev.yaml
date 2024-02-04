@@ -5,7 +5,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/SalonesApp
     username: postgres
-    password: jpma
+    password: jean
   jpa:
     show-sql: true
     properties:

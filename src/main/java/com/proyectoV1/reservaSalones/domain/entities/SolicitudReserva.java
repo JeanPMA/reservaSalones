@@ -44,7 +44,7 @@ public class SolicitudReserva {
         this.salon = salon;
         this.usuario = usuario;
         this.tipoSR = tipoSR;
-        this.tipoSR.setNombre("PENDIENTE");
+
     }
 
     public Long getId() {

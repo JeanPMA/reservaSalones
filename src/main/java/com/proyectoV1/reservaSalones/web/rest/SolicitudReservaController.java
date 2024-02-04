@@ -72,7 +72,7 @@ public class SolicitudReservaController {
     }
     @GetMapping("/buzon")
     @PreAuthorize("hasRole('USER')")
-    public List<SolicitudReserva> listarParaUsuarios() {
-        return solicitudReservaService.findByTipoSRNotNombre();
+    public List<SolicitudReserva> listarParaUsuarios(@RequestParam String username) {
+        return solicitudReservaService.findByTipoSRNotNombre(username);
     }
 }

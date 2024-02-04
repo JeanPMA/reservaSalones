@@ -6,5 +6,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface SolicitudReservaRepository extends JpaRepository<SolicitudReserva, Long> {
-    List<SolicitudReserva> findByTipoSRNombreNot(String nombre);
+    List<SolicitudReserva> findByTipoSRNombreNotAndUsuarioUsername(String tipoSRNombre, String username);
 }
