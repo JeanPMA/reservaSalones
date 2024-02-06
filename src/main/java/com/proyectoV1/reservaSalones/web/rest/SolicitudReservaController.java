@@ -1,9 +1,11 @@
 package com.proyectoV1.reservaSalones.web.rest;
 
+import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO;
 import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.services.SolicitudReservaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -63,8 +65,8 @@ public class SolicitudReservaController {
                 .body(this.solicitudReservaService.save(dto, username));
     }
 
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @DeleteMapping("/calificar/{id}")
+    @PreAuthorize("hasAnyRole('USER')")
     public ResponseEntity<Void> delete(@PathVariable final Long id) {
         solicitudReservaService.delete(id);
 
@@ -74,5 +76,18 @@ public class SolicitudReservaController {
     @PreAuthorize("hasRole('USER')")
     public List<SolicitudReserva> listarParaUsuarios(@RequestParam String username) {
         return solicitudReservaService.findByTipoSRNotNombre(username);
+    }
+    @PatchMapping("/calificacion/{id}")
+    @PreAuthorize("hasRole('USER')")
+    public ResponseEntity<SolicitudReserva> actualizarCalificacion(@RequestBody SolicitudReserva dto, @PathVariable final Long id) {
+        if (dto.getId() == null) {
+            throw new IllegalArgumentException("Invalid solicitud-reserva id, valor nulo");
+        }
+        if (!Objects.equals(dto.getId(), id)) {
+            throw new IllegalArgumentException("Invalid id");
+        }
+        solicitudReservaService.calificacionReserva(dto, id);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

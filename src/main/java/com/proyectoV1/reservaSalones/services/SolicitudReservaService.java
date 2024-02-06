@@ -1,5 +1,6 @@
 package com.proyectoV1.reservaSalones.services;
 
+import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO;
 import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
@@ -15,4 +16,5 @@ public interface SolicitudReservaService {
     void delete(Long solicitudId);
 
     List<SolicitudReserva> findByTipoSRNotNombre(String username);
+    SolicitudReserva calificacionReserva(SolicitudReserva dto, Long solicitudId);
 }

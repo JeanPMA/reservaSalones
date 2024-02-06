@@ -76,6 +76,7 @@ CREATE TABLE "solicitud_reserva" (
   "fecha_emision" date not null,
   "servicio" varchar(255) not null,
   "motivo" varchar(100) not null,
+  "puntuacion" integer,
   "salon_id" integer,
   "usuario_id" integer,
   "tipo_sr_id" integer

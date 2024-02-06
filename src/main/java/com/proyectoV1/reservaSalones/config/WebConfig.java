@@ -26,6 +26,7 @@ public class WebConfig {
         config.addAllowedMethod("POST");
         config.addAllowedMethod("PUT");
         config.addAllowedMethod("DELETE");
+        config.addAllowedMethod("PATCH");
         config.setAllowCredentials(true);
 
         source.registerCorsConfiguration("/**", config);

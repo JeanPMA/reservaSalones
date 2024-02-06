@@ -14,6 +14,7 @@ public class SolicitudReservaDTO {
     private LocalDate fecha_emision;
     private String servicio;
     private String motivo;
+    private Integer puntuacion;
     @JsonIgnoreProperties({"usuario","created_at"})
     private Salon salon;
     @JsonIgnoreProperties({"usuario","password","correo","rol"})
@@ -70,6 +71,14 @@ public class SolicitudReservaDTO {
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
+    }
+
+    public Integer getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(Integer puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
     public Salon getSalon() {

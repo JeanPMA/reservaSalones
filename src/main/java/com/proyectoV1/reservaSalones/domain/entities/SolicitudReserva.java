@@ -22,6 +22,9 @@ public class SolicitudReserva {
     private String servicio;
     @Column(name = "motivo", length = 100, nullable = false)
     private String motivo;
+    @Column(name = "puntuacion")
+    private Integer puntuacion;
+
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "salon_id")
     private Salon salon;
@@ -35,16 +38,17 @@ public class SolicitudReserva {
     public SolicitudReserva() {
     }
 
-    public SolicitudReserva(String detalle, LocalDate fecha_reserva, LocalDate fecha_emision, String servicio, String motivo, Salon salon, Usuario usuario, TipoSolicitudReserva tipoSR) {
+
+    public SolicitudReserva(String detalle, LocalDate fecha_reserva, LocalDate fecha_emision, String servicio, String motivo, Integer puntuacion, Salon salon, Usuario usuario, TipoSolicitudReserva tipoSR) {
         this.detalle = detalle;
         this.fecha_reserva = fecha_reserva;
         this.fecha_emision = fecha_emision;
         this.servicio = servicio;
         this.motivo = motivo;
+        this.puntuacion = puntuacion;
         this.salon = salon;
         this.usuario = usuario;
         this.tipoSR = tipoSR;
-
     }
 
     public Long getId() {
@@ -93,6 +97,14 @@ public class SolicitudReserva {
 
     public void setMotivo(String motivo) {
         this.motivo = motivo;
+    }
+
+    public Integer getPuntuacion() {
+        return puntuacion;
+    }
+
+    public void setPuntuacion(Integer puntuacion) {
+        this.puntuacion = puntuacion;
     }
 
     public Salon getSalon() {

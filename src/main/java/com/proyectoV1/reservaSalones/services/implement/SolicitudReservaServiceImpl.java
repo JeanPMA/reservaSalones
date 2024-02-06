@@ -1,5 +1,6 @@
 package com.proyectoV1.reservaSalones.services.implement;
 
+import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
 import com.proyectoV1.reservaSalones.domain.entities.TipoSolicitudReserva;
 import com.proyectoV1.reservaSalones.domain.entities.Usuario;
@@ -85,4 +86,15 @@ public class SolicitudReservaServiceImpl implements SolicitudReservaService {
             throw new RuntimeException("ERROR AL OBTENER DATOS");
         }
     }
+    @Override
+    public SolicitudReserva calificacionReserva(SolicitudReserva dto, Long solicitudId){
+        SolicitudReserva solicitudReserva = solicitudReservaRepository.findById(solicitudId)
+                .orElseThrow(() -> new RuntimeException("solicitud-reserva no encontrado " + solicitudId));
+
+        if (solicitudReserva.getPuntuacion() == null) {
+            solicitudReserva.setPuntuacion(dto.getPuntuacion());
+        }
+        return solicitudReservaRepository.save(solicitudReserva);
+    }
+
 }
