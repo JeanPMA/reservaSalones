@@ -2,6 +2,7 @@ package com.proyectoV1.reservaSalones.web.rest;
 
 import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.Servicio;
+import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.ImagenSalonDTO;
 import com.proyectoV1.reservaSalones.dto.SalonDTO;
 import com.proyectoV1.reservaSalones.services.SalonService;
@@ -46,7 +47,11 @@ public class SalonController {
                 .ok()
                 .body(salonService.getSalonById(id).orElseThrow(() -> new IllegalArgumentException("Recurso no encontrado: " + id)));
     }
-
+    @GetMapping("/listado")
+    @PreAuthorize("hasRole('OWNER')")
+    public List<SalonDTO> listarSalonesById(@RequestParam String username) {
+        return salonService.getSalonByUsername(username);
+    }
     @PostMapping
     @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<SalonDTO> create(@RequestParam MultipartFile multipartFile, @RequestBody final SalonDTO dto) throws URISyntaxException, IOException {

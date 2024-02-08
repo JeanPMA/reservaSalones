@@ -50,6 +50,12 @@ public class SalonServiceImpl implements SalonService {
     public Optional<SalonDTO> getSalonById(Integer salonId) {
         return salonRepository.findById(salonId).map(salonMapper::toDto);
     }
+    @Override
+    @Transactional(readOnly = true)
+    public List<SalonDTO> getSalonByUsername(String username){
+        List<Salon> salones = salonRepository.findAllByUsuarioUsername(username);
+        return salones.stream().map(salonMapper::toDto).collect(Collectors.toList());
+    }
 
     @Override
     public void delete(Integer salonId) {

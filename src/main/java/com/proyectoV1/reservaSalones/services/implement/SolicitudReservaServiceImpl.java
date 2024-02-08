@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -95,6 +96,25 @@ public class SolicitudReservaServiceImpl implements SolicitudReservaService {
             solicitudReserva.setPuntuacion(dto.getPuntuacion());
         }
         return solicitudReservaRepository.save(solicitudReserva);
+    }
+    @Override
+    public List<SolicitudReservaDTO> obtenerSolicitudesPorSalonYUsuario(String username) {
+        return solicitudReservaRepository.findSolicitudesBySalonUsuarioUsername(username);
+    }
+    @Override
+    public List<SolicitudReservaDTO> obtenerReservasPorSalonYUsuario(String username) {
+        return solicitudReservaRepository.findReservasBySalonUsuarioUsername(username);
+    }
+    @Override
+    public SolicitudReservaDTO cambiarTipoSR(SolicitudReservaDTO dto, Long solicitudId){
+        SolicitudReserva solicitudReserva = solicitudReservaRepository.findById(solicitudId)
+                .orElseThrow(() -> new RuntimeException("solicitud-reserva no encontrado " + solicitudId));
+
+        if (solicitudReserva.getTipoSR() != null) {
+            solicitudReserva.setTipoSR(dto.getTipoSR());
+        }
+        SolicitudReserva solicitudReservaActualizada = solicitudReservaRepository.save(solicitudReserva);
+        return solicitudReservaMapper.toDto(solicitudReservaActualizada);
     }
 
 }

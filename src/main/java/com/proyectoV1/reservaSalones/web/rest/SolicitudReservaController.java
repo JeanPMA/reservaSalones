@@ -90,4 +90,28 @@ public class SolicitudReservaController {
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
+
+    @GetMapping("/salon/solicitudes")
+    @PreAuthorize("hasRole('OWNER')")
+    public List<SolicitudReservaDTO> obtenerSolicitudesPorSalonYUsuario(@RequestParam String username) {
+        return solicitudReservaService.obtenerSolicitudesPorSalonYUsuario(username);
+    }
+    @GetMapping("/salon/reservas")
+    @PreAuthorize("hasRole('OWNER')")
+    public List<SolicitudReservaDTO> obtenerReservasPorSalonYUsuario(@RequestParam String username) {
+        return solicitudReservaService.obtenerReservasPorSalonYUsuario(username);
+    }
+    @PatchMapping("/estado/{id}")
+    @PreAuthorize("hasRole('OWNER')")
+    public ResponseEntity<SolicitudReservaDTO> actualizarTipoSR(@RequestBody SolicitudReservaDTO dto, @PathVariable final Long id) {
+        if (dto.getId() == null) {
+            throw new IllegalArgumentException("Invalid solicitud-reserva id, valor nulo");
+        }
+        if (!Objects.equals(dto.getId(), id)) {
+            throw new IllegalArgumentException("Invalid id");
+        }
+        solicitudReservaService.cambiarTipoSR(dto, id);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
+    }
 }

@@ -25,6 +25,19 @@ public class SolicitudReservaDTO {
     public SolicitudReservaDTO() {
     }
 
+    public SolicitudReservaDTO(Long id, String detalle, LocalDate fecha_reserva, LocalDate fecha_emision, String servicio, String motivo, Integer puntuacion, Salon salon, Usuario usuario, TipoSolicitudReserva tipoSR) {
+        this.id = id;
+        this.detalle = detalle;
+        this.fecha_reserva = fecha_reserva;
+        this.fecha_emision = fecha_emision;
+        this.servicio = servicio;
+        this.motivo = motivo;
+        this.puntuacion = puntuacion;
+        this.salon = salon;
+        this.usuario = usuario;
+        this.tipoSR = tipoSR;
+    }
+
     public Long getId() {
         return id;
     }

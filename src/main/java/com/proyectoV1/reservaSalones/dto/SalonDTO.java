@@ -27,6 +27,21 @@ public class SalonDTO {
     public SalonDTO() {
     }
 
+    public SalonDTO(Integer id, String nombre, String direccion, Integer capacidad, String descripcion, String banner_id, String banner_url, Integer tarifa, Integer estado, Usuario usuario, LocalDateTime created_at, Set<Servicio> servicios) {
+        this.id = id;
+        this.nombre = nombre;
+        this.direccion = direccion;
+        this.capacidad = capacidad;
+        this.descripcion = descripcion;
+        this.banner_id = banner_id;
+        this.banner_url = banner_url;
+        this.tarifa = tarifa;
+        this.estado = estado;
+        this.usuario = usuario;
+        this.created_at = created_at;
+        this.servicios = servicios;
+    }
+
     public Integer getId() {
         return id;
     }
