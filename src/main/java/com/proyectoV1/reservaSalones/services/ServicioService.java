@@ -13,4 +13,5 @@ public interface ServicioService {
     Optional<ServicioDTO> getServicioById(Integer servicioId);
     void delete(Integer servicioId);
     Servicio parcial(ServicioDTO dto, Integer servicioId);
+    ServicioDTO findById(Integer servicioId);
 }

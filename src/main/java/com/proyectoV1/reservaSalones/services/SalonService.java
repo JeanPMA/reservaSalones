@@ -14,7 +14,7 @@ import java.util.Set;
 public interface SalonService {
     List<SalonDTO> listarSalon();
 
-    SalonDTO save(SalonDTO dto);
+    SalonDTO save(SalonDTO dto, String username);
     Optional<SalonDTO> getSalonById(Integer salonId);
     List<SalonDTO> getSalonByUsername(String username);
     void delete(Integer salonId);

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
 @Service
@@ -60,5 +61,17 @@ public class ServicioServiceImpl implements ServicioService {
             servicio.setEstado(dto.getEstado());
         }
         return servicioRepository.save(servicio);
+    }
+    @Override
+    public ServicioDTO findById(Integer servicioId) {
+        Servicio servicio = servicioRepository.findById(servicioId)
+                .orElseThrow(() -> new NoSuchElementException("Servicio no encontrado con ID: " + servicioId));
+
+        ServicioDTO servicioDTO = new ServicioDTO();
+        servicioDTO.setId(servicio.getId());
+        servicioDTO.setNombre(servicio.getNombre());
+
+
+        return servicioDTO;
     }
 }

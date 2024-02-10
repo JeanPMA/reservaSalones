@@ -6,6 +6,7 @@ import com.proyectoV1.reservaSalones.domain.entities.Servicio;
 import com.proyectoV1.reservaSalones.domain.entities.Usuario;
 import com.proyectoV1.reservaSalones.dto.SalonDTO;
 import com.proyectoV1.reservaSalones.repositories.SalonRepository;
+import com.proyectoV1.reservaSalones.repositories.UsuarioRepository;
 import com.proyectoV1.reservaSalones.services.SalonService;
 import com.proyectoV1.reservaSalones.services.mapper.SalonMapper;
 import org.springframework.stereotype.Service;
@@ -23,10 +24,12 @@ import java.util.stream.Collectors;
 public class SalonServiceImpl implements SalonService {
     private final SalonRepository salonRepository;
     private final SalonMapper salonMapper;
+    private final UsuarioRepository usuarioRepository;
 
-    public SalonServiceImpl(SalonRepository salonRepository, SalonMapper salonMapper) {
+    public SalonServiceImpl(SalonRepository salonRepository, SalonMapper salonMapper, UsuarioRepository usuarioRepository) {
         this.salonRepository = salonRepository;
         this.salonMapper = salonMapper;
+        this.usuarioRepository = usuarioRepository;
     }
     @Override
     @Transactional(readOnly = true)
@@ -36,10 +39,17 @@ public class SalonServiceImpl implements SalonService {
                 .map(salonMapper::toDto).collect(Collectors.toList());
     }
     @Override
-    public SalonDTO save(SalonDTO dto) {
+    public SalonDTO save(SalonDTO dto, String username) {
         Salon salon = salonMapper.toEntity(dto);
         if (salon.getCreated_at() == null) {
             salon.setCreated_at(LocalDateTime.now());
+        }
+        Optional<Usuario> optionalUsuario = usuarioRepository.findOneByUsername(username);
+
+        if (optionalUsuario.isPresent()) {
+            salon.setUsuario(optionalUsuario.get());
+        } else {
+            throw new RuntimeException("Usuario no encontrado: " + username);
         }
         salon = salonRepository.save(salon);
         return salonMapper.toDto(salon);
