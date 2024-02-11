@@ -24,8 +24,8 @@ public class ImagenSalonServiceImpl implements ImagenSalonService {
     }
     @Override
     @Transactional(readOnly = true)
-    public List<ImagenSalonDTO> listarImagenes() {
-        return imagenSalonRepository.findAll()
+    public List<ImagenSalonDTO> listarImagenes(Integer salonId) {
+        return imagenSalonRepository.findBySalonId(salonId)
                 .stream()
                 .map(imagenSalonMapper::toDto).collect(Collectors.toList());
     }

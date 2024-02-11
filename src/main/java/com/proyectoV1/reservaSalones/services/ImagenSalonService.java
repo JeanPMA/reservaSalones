@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ImagenSalonService {
-    List<ImagenSalonDTO> listarImagenes();
+    List<ImagenSalonDTO> listarImagenes(Integer salonId);
 
     ImagenSalonDTO save(ImagenSalonDTO dto);
     Optional<ImagenSalonDTO> getImagenById(Long imagenSalonId);

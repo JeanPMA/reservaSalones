@@ -6,7 +6,9 @@ import com.proyectoV1.reservaSalones.dto.ImagenSalonDTO;
 import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.error.Mensaje;
 import com.proyectoV1.reservaSalones.services.ImagenSalonService;
+import com.proyectoV1.reservaSalones.services.SalonService;
 import com.proyectoV1.reservaSalones.services.implement.CloudinaryServiceImpl;
+import com.proyectoV1.reservaSalones.services.mapper.SalonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,15 +31,19 @@ import java.util.Optional;
 public class ImagenSalonController {
     @Autowired
     CloudinaryServiceImpl cloudinaryService;
+    @Autowired
+    SalonMapper salonMapper;
     private final ImagenSalonService imagenSalonService;
+    private final SalonService salonService;
 
-    public ImagenSalonController(ImagenSalonService imagenSalonService) {
+    public ImagenSalonController(ImagenSalonService imagenSalonService, SalonService salonService) {
         this.imagenSalonService = imagenSalonService;
+        this.salonService = salonService;
     }
-    @GetMapping
+    @GetMapping("/{salonId}/imagenes")
     @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
-    public ResponseEntity<List<ImagenSalonDTO>> listarImagenes() {
-        return ResponseEntity.ok().body(imagenSalonService.listarImagenes());
+    public ResponseEntity<List<ImagenSalonDTO>> listarImagenes(@PathVariable Integer salonId) {
+        return ResponseEntity.ok().body(imagenSalonService.listarImagenes(salonId));
     }
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
@@ -48,7 +54,7 @@ public class ImagenSalonController {
     }
     @PostMapping
     @PreAuthorize("hasRole('OWNER')")
-    public ResponseEntity<ImagenSalonDTO> crear(@RequestParam MultipartFile multipartFile, @RequestParam Long idSalon) throws IOException, URISyntaxException {
+    public ResponseEntity<ImagenSalonDTO> crear(@RequestParam MultipartFile multipartFile, @RequestParam Integer idSalon) throws IOException, URISyntaxException {
         BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
         if (bufferedImage == null){
             return new ResponseEntity(new Mensaje("Imagen no valida"), HttpStatus.BAD_REQUEST);
@@ -60,7 +66,12 @@ public class ImagenSalonController {
         imagenSalonDTO.setNombre((String) result.get("original_filename"));
         imagenSalonDTO.setImagen_id((String) result.get("public_id"));
         imagenSalonDTO.setImagen_url((String) result.get("url"));
-        //imagenSalonDTO.setSalon(salonService.findById(idSalon).orElse(null));
+        Salon salon = salonService.getSalonById(idSalon)
+                .map(salonMapper::toEntity)
+                .orElseThrow(() -> new RuntimeException("Salon no encontrado con el ID: " + idSalon));
+        imagenSalonDTO.setSalon(salon);
+
+
 
         imagenSalonService.save(imagenSalonDTO);
         return ResponseEntity.created(new URI("/v1/imagen-salon/" + imagenSalonDTO.getId())).body(imagenSalonDTO);
