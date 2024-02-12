@@ -15,6 +15,8 @@ public class TipoSolicitudReserva {
 
     @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
+    @Column(name = "estado", nullable = false)
+    private Integer estado;
 
     @Column(name = "created_at", columnDefinition = "TIMESTAMP", nullable = false)
     private LocalDateTime created_at;
@@ -22,8 +24,9 @@ public class TipoSolicitudReserva {
     public TipoSolicitudReserva() {
     }
 
-    public TipoSolicitudReserva(String nombre, LocalDateTime created_at) {
+    public TipoSolicitudReserva(String nombre, Integer estado, LocalDateTime created_at) {
         this.nombre = nombre;
+        this.estado = estado;
         this.created_at = created_at;
     }
 
@@ -41,6 +44,14 @@ public class TipoSolicitudReserva {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 
     public LocalDateTime getCreated_at() {

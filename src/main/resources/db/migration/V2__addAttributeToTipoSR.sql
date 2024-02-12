@@ -1,0 +1,1 @@
+ALTER TABLE tipo_solicitud_reserva ADD COLUMN "estado" integer NOT NULL DEFAULT 0;

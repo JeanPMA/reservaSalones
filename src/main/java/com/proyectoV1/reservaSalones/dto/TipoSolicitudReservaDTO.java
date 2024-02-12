@@ -1,10 +1,14 @@
 package com.proyectoV1.reservaSalones.dto;
 
+import jakarta.persistence.Column;
+
 import java.time.LocalDateTime;
 
 public class TipoSolicitudReservaDTO {
     private Integer id;
     private String nombre;
+
+    private Integer estado;
     private LocalDateTime created_at;
 
     public TipoSolicitudReservaDTO() {
@@ -24,6 +28,14 @@ public class TipoSolicitudReservaDTO {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public Integer getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Integer estado) {
+        this.estado = estado;
     }
 
     public LocalDateTime getCreated_at() {

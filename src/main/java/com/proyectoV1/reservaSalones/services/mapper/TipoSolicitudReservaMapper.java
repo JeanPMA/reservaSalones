@@ -11,6 +11,7 @@ public class TipoSolicitudReservaMapper implements CustomMapper<TipoSolicitudRes
         TipoSolicitudReservaDTO tipoSolicitudReservaDTO = new TipoSolicitudReservaDTO();
         tipoSolicitudReservaDTO.setId(tipoSolicitudReserva.getId());
         tipoSolicitudReservaDTO.setNombre(tipoSolicitudReserva.getNombre());
+        tipoSolicitudReservaDTO.setEstado(tipoSolicitudReserva.getEstado());
         tipoSolicitudReservaDTO.setCreated_at(tipoSolicitudReserva.getCreated_at());
 
         return tipoSolicitudReservaDTO;
@@ -21,6 +22,7 @@ public class TipoSolicitudReservaMapper implements CustomMapper<TipoSolicitudRes
         TipoSolicitudReserva tipoSolicitudReserva = new TipoSolicitudReserva();
         tipoSolicitudReserva.setId(tipoSolicitudReservaDTO.getId());
         tipoSolicitudReserva.setNombre(tipoSolicitudReservaDTO.getNombre());
+        tipoSolicitudReserva.setEstado(tipoSolicitudReservaDTO.getEstado());
         tipoSolicitudReserva.setCreated_at(tipoSolicitudReservaDTO.getCreated_at());
 
         return tipoSolicitudReserva;

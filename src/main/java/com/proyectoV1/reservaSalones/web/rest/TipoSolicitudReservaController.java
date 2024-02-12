@@ -1,7 +1,10 @@
 package com.proyectoV1.reservaSalones.web.rest;
 
+import com.proyectoV1.reservaSalones.domain.entities.Salon;
+import com.proyectoV1.reservaSalones.domain.entities.TipoSolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.TipoSolicitudReservaDTO;
 import com.proyectoV1.reservaSalones.services.TipoSolicitudReservaService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -68,5 +71,18 @@ public class TipoSolicitudReservaController {
         tipoSolicitudReservaService.delete(id);
 
         return ResponseEntity.noContent().build();
+    }
+    @PatchMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<TipoSolicitudReserva> actualizarEstado(@RequestBody TipoSolicitudReserva dto, @PathVariable final Integer id) {
+        if (dto.getId() == null) {
+            throw new IllegalArgumentException("Invalid salon id, valor nulo");
+        }
+        if (!Objects.equals(dto.getId(), id)) {
+            throw new IllegalArgumentException("Invalid id");
+        }
+        tipoSolicitudReservaService.parcial(dto, id);
+
+        return new ResponseEntity<>(dto, HttpStatus.OK);
     }
 }

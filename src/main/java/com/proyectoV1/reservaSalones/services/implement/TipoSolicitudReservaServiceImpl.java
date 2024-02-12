@@ -1,5 +1,6 @@
 package com.proyectoV1.reservaSalones.services.implement;
 
+import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.TipoSolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.TipoSolicitudReservaDTO;
 import com.proyectoV1.reservaSalones.repositories.TipoSolicitudReservaRepository;
@@ -51,5 +52,15 @@ public class TipoSolicitudReservaServiceImpl implements TipoSolicitudReservaServ
     @Override
     public void delete(Integer tipoSRId) {
         tipoSolicitudReservaRepository.deleteById(tipoSRId);
+    }
+    @Override
+    public TipoSolicitudReserva parcial(TipoSolicitudReserva dto, Integer salonId){
+        TipoSolicitudReserva tipoSolicitudReserva = tipoSolicitudReservaRepository.findById(salonId)
+                .orElseThrow(() -> new RuntimeException("TipoSR no encontrado " + salonId));
+
+        if (dto.getEstado() != null) {
+            tipoSolicitudReserva.setEstado(dto.getEstado());
+        }
+        return tipoSolicitudReservaRepository.save(tipoSolicitudReserva);
     }
 }
