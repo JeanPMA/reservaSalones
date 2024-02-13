@@ -54,7 +54,15 @@ public class SalonServiceImpl implements SalonService {
         salon = salonRepository.save(salon);
         return salonMapper.toDto(salon);
     }
-
+    @Override
+    public SalonDTO saveForAdmin(SalonDTO dto) {
+        Salon salon = salonMapper.toEntity(dto);
+        if (salon.getCreated_at() == null) {
+            salon.setCreated_at(LocalDateTime.now());
+        }
+        salon = salonRepository.save(salon);
+        return salonMapper.toDto(salon);
+    }
     @Override
     @Transactional(readOnly = true)
     public Optional<SalonDTO> getSalonById(Integer salonId) {

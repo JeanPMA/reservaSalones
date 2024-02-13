@@ -74,7 +74,21 @@ public class SalonController {
 
         return ResponseEntity.created(new URI("/v1/salon/" + salonDTO.getId())).body(salonDTO);
     }
+    @PostMapping("/admin")
+    @PreAuthorize("hasRole('ADMIN')")
+    public ResponseEntity<SalonDTO> create(@RequestParam("multipartFile") MultipartFile multipartFile, @ModelAttribute SalonDTO dto) throws URISyntaxException, IOException {
 
+        BufferedImage bufferedImage = ImageIO.read(multipartFile.getInputStream());
+        if (dto.getId() != null) {
+            throw new IllegalArgumentException("El salon no puede tener ya un id ingresado.");
+        }
+        Map result = cloudinaryService.upload(multipartFile);
+        dto.setBanner_id((String) result.get("public_id"));
+        dto.setBanner_url((String) result.get("url"));
+        SalonDTO salonDTO = salonService.saveForAdmin(dto);
+
+        return ResponseEntity.created(new URI("/v1/salon/admin" + salonDTO.getId())).body(salonDTO);
+    }
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public SalonDTO editSalon(@RequestParam(required = false) MultipartFile multipartFile,
@@ -126,7 +140,53 @@ public class SalonController {
         SalonDTO salonDTO = salonService.save(salonPresencia, username);
         return salonDTO;
     }
+    @PutMapping("/admin/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public SalonDTO editSalonForAdmin(@RequestParam(required = false) MultipartFile multipartFile,
+                              @RequestParam("servicios") Set<Integer> serviciosIds,
+                              @ModelAttribute final SalonDTO dto,
+                              @PathVariable final Integer id) throws URISyntaxException, IOException {
+        if (dto.getId() == null) {
+            throw new IllegalArgumentException("Invalid salon id, valor nulo");
+        }
+        if (!Objects.equals(dto.getId(), id)) {
+            throw new IllegalArgumentException("Invalid id");
+        }
+        SalonDTO salonPresencia = salonService.getSalonById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Salón no encontrado con ID: " + id));
 
+        salonPresencia.setNombre(dto.getNombre());
+        salonPresencia.setDireccion(dto.getDireccion());
+        salonPresencia.setCapacidad(dto.getCapacidad());
+        salonPresencia.setDescripcion(dto.getDescripcion());
+        salonPresencia.setTarifa(dto.getTarifa());
+        salonPresencia.setEstado(dto.getEstado());
+        salonPresencia.setUsuario(dto.getUsuario());
+
+        Set<Servicio> servicios = serviciosIds.stream()
+                .map(servicioId -> servicioService.getServicioById(servicioId)
+                        .orElseThrow(() -> new NoSuchElementException("Servicio no encontrado con ID: " + servicioId)))
+                .map(servicioMapper::toEntity)
+                .collect(Collectors.toSet());
+
+        salonPresencia.setServicios(servicios);
+
+
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            // Borrar la imagen antigua de Cloudinary
+            if (salonPresencia.getBanner_id() != null) {
+                cloudinaryService.delete(salonPresencia.getBanner_id());
+            }
+
+            // Subir la nueva imagen a Cloudinary
+            Map<String, String> result = cloudinaryService.upload(multipartFile);
+            salonPresencia.setBanner_id(result.get("public_id"));
+            salonPresencia.setBanner_url(result.get("url"));
+        }
+
+        SalonDTO salonDTO = salonService.saveForAdmin(salonPresencia);
+        return salonDTO;
+    }
     @DeleteMapping("/{id}")
     @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable final Integer id) throws IOException {

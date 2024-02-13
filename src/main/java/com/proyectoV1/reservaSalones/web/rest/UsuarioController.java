@@ -6,20 +6,25 @@ import com.proyectoV1.reservaSalones.services.UsuarioService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/usuario")
 public class UsuarioController {
     private final UsuarioService usuarioService;
+    private final BCryptPasswordEncoder passwordEncoder;
 
-    public UsuarioController(UsuarioService usuarioService) {
+
+    public UsuarioController(UsuarioService usuarioService, BCryptPasswordEncoder passwordEncoder) {
         this.usuarioService = usuarioService;
+        this.passwordEncoder = passwordEncoder;
     }
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")
@@ -41,6 +46,8 @@ public class UsuarioController {
         if (dto.getId() != null) {
             throw new IllegalArgumentException("El usuario no puede tener ya un id ingresado.");
         }
+        String passwordEncriptado = passwordEncoder.encode(dto.getPassword());
+        dto.setPassword(passwordEncriptado);
 
         UsuarioDTO usuarioDTO = usuarioService.save(dto);
 
@@ -48,7 +55,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasRole('OWNER','ADMIN')")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
     public ResponseEntity<UsuarioDTO> editUsuario(@RequestBody final UsuarioDTO dto,
                                                     @PathVariable final Long id) throws URISyntaxException {
         if (dto.getId() == null) {
@@ -57,10 +64,22 @@ public class UsuarioController {
         if (!Objects.equals(dto.getId(), id)) {
             throw new IllegalArgumentException("Invalid id");
         }
+        Optional<UsuarioDTO> optionalUsuario = usuarioService.getUsuarioById(id);
 
-        return ResponseEntity
-                .ok()
-                .body(this.usuarioService.save(dto));
+        if (optionalUsuario.isPresent()) {
+            UsuarioDTO existingUsuario = optionalUsuario.get();
+
+            if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
+                String passwordEncriptado = passwordEncoder.encode(dto.getPassword());
+                dto.setPassword(passwordEncriptado);
+            } else {
+                dto.setPassword(existingUsuario.getPassword());
+            }
+
+            return ResponseEntity.ok().body(this.usuarioService.save(dto));
+        } else {
+            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+        }
     }
 
     @DeleteMapping("/{id}")

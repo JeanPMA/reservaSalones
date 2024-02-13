@@ -15,6 +15,7 @@ public interface SalonService {
     List<SalonDTO> listarSalon();
 
     SalonDTO save(SalonDTO dto, String username);
+    SalonDTO saveForAdmin(SalonDTO dto);
     Optional<SalonDTO> getSalonById(Integer salonId);
     List<SalonDTO> getSalonByUsername(String username);
     void delete(Integer salonId);

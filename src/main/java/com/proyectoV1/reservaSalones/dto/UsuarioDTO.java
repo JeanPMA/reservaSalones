@@ -1,11 +1,14 @@
 package com.proyectoV1.reservaSalones.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.proyectoV1.reservaSalones.domain.entities.Rol;
 
 public class UsuarioDTO {
     private Long id;
     private String username;
+
     private String password;
     private Integer telefono;
     private String nombre;
@@ -33,11 +36,11 @@ public class UsuarioDTO {
     public void setUsername(String username) {
         this.username = username;
     }
-
+    @JsonIgnore
     public String getPassword() {
         return password;
     }
-
+    @JsonProperty
     public void setPassword(String password) {
         this.password = password;
     }

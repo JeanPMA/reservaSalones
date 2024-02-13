@@ -18,7 +18,7 @@ public class SalonDTO {
     private String banner_url;
     private Integer tarifa;
     private Integer estado;
-    @JsonIgnoreProperties({"usuario","password","telefono","correo","rol"})
+    @JsonIgnoreProperties({"username","password","telefono","correo","rol"})
     private Usuario usuario;
     private LocalDateTime created_at;
     @JsonIgnoreProperties({"detalle","created_at","salones"})
