@@ -1,6 +1,10 @@
 package com.proyectoV1.reservaSalones.web.rest;
 
+import com.proyectoV1.reservaSalones.domain.entities.Rol;
 import com.proyectoV1.reservaSalones.domain.entities.Usuario;
+import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
+import com.proyectoV1.reservaSalones.repositories.RolRepository;
+import com.proyectoV1.reservaSalones.repositories.UsuarioRepository;
 import com.proyectoV1.reservaSalones.security.AuthCredentials;
 import com.proyectoV1.reservaSalones.security.JwtAuthenticationFilter;
 import com.proyectoV1.reservaSalones.security.JwtUtil;
@@ -12,6 +16,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 
@@ -23,19 +28,12 @@ public class LoginController {
     private AuthenticationManager authenticationManager;
     @Autowired
     private JwtUtil jwtUtil;
-
-
-
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hello World Not Secured";
-    }
-
-    @GetMapping("/helloSecured")
-    public String helloSecured(){
-        return "Hello World Secured";
-    }
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private RolRepository rolRepository;
+    @Autowired
+    private UsuarioRepository usuarioRepository;
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody AuthCredentials authCredentials) {
 
@@ -48,7 +46,29 @@ public class LoginController {
 
         return ResponseEntity.ok(new JwtResponse(jwt));
     }
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody UsuarioDTO usuarioDTO) {
+        Usuario usuario = new Usuario();
+        usuario.setUsername(usuarioDTO.getUsername());
+        usuario.setPassword(passwordEncoder.encode(usuarioDTO.getPassword()));
+        usuario.setTelefono(usuarioDTO.getTelefono());
+        usuario.setNombre(usuarioDTO.getNombre());
+        usuario.setApellido(usuarioDTO.getApellido());
+        usuario.setCorreo(usuarioDTO.getCorreo());
+        usuario.setEstado(1);
+        Rol defaultRole = rolRepository.findByNombre("USER");
+        usuario.setRol(defaultRole);
+        usuarioRepository.save(usuario);
 
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(usuarioDTO.getUsername(), usuarioDTO.getPassword()));
+
+        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+
+        String jwt = jwtUtil.createToken(userDetails.getUsername(), userDetails.getAuthorities());
+
+        return ResponseEntity.ok(new JwtResponse(jwt));
+    }
     @GetMapping("/accessAdmin")
     @PreAuthorize("hasRole('ADMIN')")
     public String accessAdmin(){

@@ -8,7 +8,6 @@ import com.proyectoV1.reservaSalones.domain.entities.Rol;
 public class UsuarioDTO {
     private Long id;
     private String username;
-
     private String password;
     private Integer telefono;
     private String nombre;
