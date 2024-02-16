@@ -39,6 +39,30 @@ public class SalonServiceImpl implements SalonService {
                 .map(salonMapper::toDto).collect(Collectors.toList());
     }
     @Override
+    @Transactional(readOnly = true)
+    public List<SalonDTO> listarSalonPorCalificacion(){
+        return salonRepository.listaSalonesByCalificacion();
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public List<SalonDTO> listarSalonParaUsuarios(){
+        List<SalonDTO> salones = salonRepository.findAllByEstadoOrderByNombre();
+        return salones;
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public List<SalonDTO> listarSalonPorCalificacionAuth(){
+        List<SalonDTO> salones = salonRepository.listaSalonesByCalificacionForUserAuth();
+        return salones;
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public List<SalonDTO> listarSalonParaUsuariosAuth(){
+        List<Salon> salones = salonRepository.findAllSalonForUserAuth();
+        return salones.stream()
+                .map(salonMapper::toDto).collect(Collectors.toList());
+    }
+    @Override
     public SalonDTO save(SalonDTO dto, String username) {
         Salon salon = salonMapper.toEntity(dto);
         if (salon.getCreated_at() == null) {

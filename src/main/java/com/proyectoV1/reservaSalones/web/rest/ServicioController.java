@@ -25,7 +25,11 @@ public class ServicioController {
     public ResponseEntity<List<ServicioDTO>> listarServicio() {
         return ResponseEntity.ok().body(servicioService.listarServicio());
     }
-
+    @GetMapping("/activo")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN','USER')")
+    public ResponseEntity<List<ServicioDTO>> listarServicioActivo() {
+        return ResponseEntity.ok().body(servicioService.listarServicioHabilitado());
+    }
     @GetMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<ServicioDTO> getServicioById(@PathVariable final Integer id) {

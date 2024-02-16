@@ -13,7 +13,10 @@ import java.util.Set;
 
 public interface SalonService {
     List<SalonDTO> listarSalon();
-
+    List<SalonDTO> listarSalonPorCalificacion();
+    List<SalonDTO> listarSalonParaUsuarios();
+    List<SalonDTO> listarSalonPorCalificacionAuth();
+    List<SalonDTO> listarSalonParaUsuariosAuth();
     SalonDTO save(SalonDTO dto, String username);
     SalonDTO saveForAdmin(SalonDTO dto);
     Optional<SalonDTO> getSalonById(Integer salonId);

@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface ServicioService {
     List<ServicioDTO> listarServicio();
-
+    List<ServicioDTO> listarServicioHabilitado();
     ServicioDTO save(ServicioDTO dto);
     Optional<ServicioDTO> getServicioById(Integer servicioId);
     void delete(Integer servicioId);

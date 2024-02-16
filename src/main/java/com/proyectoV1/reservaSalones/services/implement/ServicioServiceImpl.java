@@ -2,6 +2,7 @@ package com.proyectoV1.reservaSalones.services.implement;
 
 import com.proyectoV1.reservaSalones.domain.entities.Servicio;
 import com.proyectoV1.reservaSalones.domain.entities.TipoSolicitudReserva;
+import com.proyectoV1.reservaSalones.dto.SalonDTO;
 import com.proyectoV1.reservaSalones.dto.ServicioDTO;
 import com.proyectoV1.reservaSalones.dto.ServicioDTO;
 import com.proyectoV1.reservaSalones.repositories.ServicioRepository;
@@ -31,6 +32,12 @@ public class ServicioServiceImpl implements ServicioService {
         return servicioRepository.findAll()
                 .stream()
                 .map(servicioMapper::toDto).collect(Collectors.toList());
+    }
+    @Override
+    @Transactional(readOnly = true)
+    public List<ServicioDTO> listarServicioHabilitado(){
+        List<ServicioDTO> servicios = servicioRepository.findAllServicioActivo();
+        return servicios;
     }
     @Override
     public ServicioDTO save(ServicioDTO dto) {

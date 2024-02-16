@@ -12,6 +12,14 @@ public class ServicioDTO {
     public ServicioDTO() {
     }
 
+    public ServicioDTO(Integer id, String nombre, String detalle, Integer estado, LocalDateTime created_at) {
+        this.id = id;
+        this.nombre = nombre;
+        this.detalle = detalle;
+        this.estado = estado;
+        this.created_at = created_at;
+    }
+
     public Integer getId() {
         return id;
     }

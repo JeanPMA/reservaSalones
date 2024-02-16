@@ -38,14 +38,29 @@ public class SalonController {
         this.servicioService = servicioService;
         this.servicioMapper = servicioMapper;
     }
-    @GetMapping("/recomendado")
-    public ResponseEntity<List<SalonDTO>> listarSalonRecomendado() {
-        return ResponseEntity.ok().body(salonService.listarSalon());
-    }
+
     @GetMapping
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     public ResponseEntity<List<SalonDTO>> listarSalon() {
         return ResponseEntity.ok().body(salonService.listarSalon());
+    }
+    @GetMapping("/recomendado")
+    public List<SalonDTO> listarSalonRecomendado() {
+        return salonService.listarSalonPorCalificacion();
+    }
+    @GetMapping("/forUser")
+    public List<SalonDTO> listarSalonParaUsuarios() {
+        return salonService.listarSalonParaUsuarios();
+    }
+    @GetMapping("/auth/recomendado")
+    @PreAuthorize("hasRole('USER')")
+    public List<SalonDTO> listarSalonRecomendadoAuth() {
+        return salonService.listarSalonPorCalificacionAuth();
+    }
+    @GetMapping("/auth/all")
+    @PreAuthorize("hasRole('USER')")
+    public List<SalonDTO> listarSalonParaUsuariosAuth() {
+        return salonService.listarSalonParaUsuariosAuth();
     }
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('OWNER','ADMIN','USER')")
