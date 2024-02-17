@@ -54,13 +54,19 @@ public class SolicitudReservaServiceImpl implements SolicitudReservaService {
             throw new RuntimeException("Usuario no encontrado: " + username);
         }
 
-        Optional<TipoSolicitudReserva> tipoSolicitudPendiente = tipoSolicitudReservaRepository.findByNombre("PENDIENTE");
+        if (dto.getTipoSR() == null) {
+            Optional<TipoSolicitudReserva> tipoSolicitudPendiente = tipoSolicitudReservaRepository.findByNombre("PENDIENTE");
 
-        if (tipoSolicitudPendiente.isPresent()) {
-            solicitudReserva.setTipoSR(tipoSolicitudPendiente.get());
+            if (tipoSolicitudPendiente.isPresent()) {
+                solicitudReserva.setTipoSR(tipoSolicitudPendiente.get());
+            } else {
+                throw new RuntimeException("No se pudo encontrar el tipo de solicitud con nombre 'PENDIENTE'");
+            }
         } else {
-            throw new RuntimeException("No se pudo encontrar el tipo de solicitud con nombre 'PENDIENTE'");
+
+            solicitudReserva.setTipoSR(dto.getTipoSR());
         }
+
         solicitudReserva = solicitudReservaRepository.save(solicitudReserva);
         return solicitudReservaMapper.toDto(solicitudReserva);
     }
