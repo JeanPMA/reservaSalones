@@ -11,10 +11,12 @@ import com.proyectoV1.reservaSalones.security.JwtUtil;
 import com.proyectoV1.reservaSalones.security.UserDetailServiceImpl;
 import com.proyectoV1.reservaSalones.web.rest.response.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
@@ -36,15 +38,23 @@ public class LoginController {
     private UsuarioRepository usuarioRepository;
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody AuthCredentials authCredentials) {
-
-        Authentication authentication = authenticationManager.authenticate(
+        try {
+            Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(authCredentials.getUsername(), authCredentials.getPassword()));
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+            UserDetails userDetails = (UserDetails) authentication.getPrincipal();
 
-        String jwt = jwtUtil.createToken(userDetails.getUsername(), userDetails.getAuthorities());
+            int userStatus = usuarioRepository.getUserStatus(authCredentials.getUsername());
 
-        return ResponseEntity.ok(new JwtResponse(jwt));
+            if (userStatus == 1) {
+                String jwt = jwtUtil.createToken(userDetails.getUsername(), userDetails.getAuthorities());
+                return ResponseEntity.ok(new JwtResponse(jwt));
+            } else {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: El usuario no está autorizado.");
+            }
+        } catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Error: Credenciales de inicio de sesión inválidas.");
+        }
     }
     @PostMapping("/register")
     public ResponseEntity<?> registerUser(@RequestBody UsuarioDTO usuarioDTO) {

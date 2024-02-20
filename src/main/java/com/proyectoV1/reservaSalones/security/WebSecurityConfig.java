@@ -42,6 +42,7 @@ public class WebSecurityConfig{
                 .authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login").permitAll();
                     auth.requestMatchers(HttpMethod.POST,"/v1/register").permitAll();
+                    auth.requestMatchers(HttpMethod.POST,"/v1/login").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/v1/salon/recomendado").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/v1/salon/forUser").permitAll();
                     auth.anyRequest().authenticated();
