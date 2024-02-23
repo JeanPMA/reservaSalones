@@ -52,8 +52,10 @@ public class SalonServiceImpl implements SalonService {
     @Override
     @Transactional(readOnly = true)
     public List<SalonDTO> listarSalonPorCalificacionAuth(){
-        List<SalonDTO> salones = salonRepository.listaSalonesByCalificacionForUserAuth();
-        return salones;
+        List<Salon> salones = salonRepository.listaSalonesByCalificacionForUserAuth();
+
+        return salones.stream()
+                .map(salonMapper::toDto).collect(Collectors.toList());
     }
     @Override
     @Transactional(readOnly = true)
