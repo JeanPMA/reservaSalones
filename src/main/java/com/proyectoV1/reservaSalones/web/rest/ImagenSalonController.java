@@ -41,7 +41,7 @@ public class ImagenSalonController {
         this.salonService = salonService;
     }
     @GetMapping("/{salonId}/imagenes")
-    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN','USER')")
     public ResponseEntity<List<ImagenSalonDTO>> listarImagenes(@PathVariable Integer salonId) {
         return ResponseEntity.ok().body(imagenSalonService.listarImagenes(salonId));
     }

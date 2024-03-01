@@ -55,8 +55,10 @@ public class SalonDTO {
         this.created_at = created_at;
 
     }
-    public SalonDTO(String nombre, String descripcion, String banner_id, String banner_url, Integer estado) {
+    public SalonDTO(String nombre, String direccion, Integer capacidad, String descripcion, String banner_id, String banner_url, Integer estado) {
         this.nombre = nombre;
+        this.direccion = direccion;
+        this.capacidad = capacidad;
         this.descripcion = descripcion;
         this.banner_id = banner_id;
         this.banner_url = banner_url;
