@@ -45,6 +45,7 @@ public class WebSecurityConfig{
                     auth.requestMatchers(HttpMethod.POST,"/v1/login").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/v1/salon/recomendado").permitAll();
                     auth.requestMatchers(HttpMethod.GET, "/v1/salon/forUser").permitAll();
+                    auth.requestMatchers(HttpMethod.POST, "/v1/correo").permitAll();
                     auth.anyRequest().authenticated();
                 })
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
