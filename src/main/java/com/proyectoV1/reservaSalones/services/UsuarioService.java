@@ -14,4 +14,6 @@ public interface UsuarioService {
     Optional<UsuarioDTO> getUsuarioById(Long usuarioId);
     void delete(Long usuarioId);
     Usuario parcial(UsuarioDTO dto, Long usuarioId);
+
+    Optional<UsuarioDTO> getUsuarioByUsername(String username);
 }

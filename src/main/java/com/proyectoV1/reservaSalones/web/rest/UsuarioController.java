@@ -33,7 +33,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('OWNER','ADMIN')")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN','USER')")
     public ResponseEntity<UsuarioDTO> getUsuarioById(@PathVariable final Long id) {
         return ResponseEntity
                 .ok()
@@ -67,13 +67,13 @@ public class UsuarioController {
         Optional<UsuarioDTO> optionalUsuario = usuarioService.getUsuarioById(id);
 
         if (optionalUsuario.isPresent()) {
-            UsuarioDTO existingUsuario = optionalUsuario.get();
+            UsuarioDTO oldUsuario = optionalUsuario.get();
 
             if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
                 String passwordEncriptado = passwordEncoder.encode(dto.getPassword());
                 dto.setPassword(passwordEncriptado);
             } else {
-                dto.setPassword(existingUsuario.getPassword());
+                dto.setPassword(oldUsuario.getPassword());
             }
 
             return ResponseEntity.ok().body(this.usuarioService.save(dto));
@@ -82,6 +82,39 @@ public class UsuarioController {
         }
     }
 
+    @PutMapping("/config/{id}")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN', 'USER')")
+    public ResponseEntity<UsuarioDTO> configUsuario(@RequestBody final UsuarioDTO dto,
+                                                  @PathVariable final Long id) throws URISyntaxException {
+        if (dto.getId() == null) {
+            throw new IllegalArgumentException("Invalid usuario id, valor nulo");
+        }
+        if (!Objects.equals(dto.getId(), id)) {
+            throw new IllegalArgumentException("Invalid id");
+        }
+        Optional<UsuarioDTO> optionalUsuario = usuarioService.getUsuarioById(id);
+
+        if (optionalUsuario.isPresent()) {
+            UsuarioDTO oldUsuario = optionalUsuario.get();
+            
+            Integer existingRoleId = oldUsuario.getRol().getId();
+            dto.getRol().setId(existingRoleId);
+
+            String existingUsername = oldUsuario.getUsername();
+            dto.setUsername(existingUsername);
+
+            if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
+                String passwordEncriptado = passwordEncoder.encode(dto.getPassword());
+                dto.setPassword(passwordEncriptado);
+            } else {
+                dto.setPassword(oldUsuario.getPassword());
+            }
+
+            return ResponseEntity.ok().body(this.usuarioService.save(dto));
+        } else {
+            throw new RuntimeException("Usuario no encontrado con ID: " + id);
+        }
+    }
     @DeleteMapping("/{id}")
     @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable final Long id) {
@@ -102,5 +135,11 @@ public class UsuarioController {
 
         return new ResponseEntity<>(dto, HttpStatus.OK);
     }
-
+    @GetMapping("/config/{username}")
+    @PreAuthorize("hasAnyRole('OWNER','ADMIN', 'USER')")
+    public ResponseEntity<UsuarioDTO> getUsuarioByUseername(@PathVariable final String username) {
+        return ResponseEntity
+                .ok()
+                .body(usuarioService.getUsuarioByUsername(username).orElseThrow(() -> new IllegalArgumentException("Recurso no encontrado: " + username)));
+    }
 }

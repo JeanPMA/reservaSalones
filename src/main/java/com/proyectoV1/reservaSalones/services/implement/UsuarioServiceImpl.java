@@ -56,4 +56,8 @@ public class UsuarioServiceImpl implements UsuarioService {
         }
         return usuarioRepository.save(usuario);
     }
+    @Override
+    public Optional<UsuarioDTO> getUsuarioByUsername(String username){
+        return usuarioRepository.findOneByUsername(username).map(usuarioMapper::toDto);
+    }
 }

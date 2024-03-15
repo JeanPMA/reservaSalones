@@ -22,6 +22,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 
+import java.util.ArrayList;
+import java.util.Optional;
+
 
 @RestController
 @RequestMapping("/v1")
@@ -78,6 +81,11 @@ public class LoginController {
         String jwt = jwtUtil.createToken(userDetails.getUsername(), userDetails.getAuthorities());
 
         return ResponseEntity.ok(new JwtResponse(jwt));
+    }
+
+
+    private String desencriptarPassword(String passwordEncriptada) {
+        return passwordEncoder.encode(passwordEncriptada);
     }
     @GetMapping("/accessAdmin")
     @PreAuthorize("hasRole('ADMIN')")
