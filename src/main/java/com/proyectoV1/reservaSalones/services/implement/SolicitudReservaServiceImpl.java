@@ -88,7 +88,7 @@ public class SolicitudReservaServiceImpl implements SolicitudReservaService {
         Optional<TipoSolicitudReserva> estadoInvisible = tipoSolicitudReservaRepository.findByNombre("INVISIBLE");
 
         if (estadoInvisible.isPresent()) {
-            return solicitudReservaRepository.findByTipoSRNombreNotAndUsuarioUsername(estadoInvisible.get().getNombre(), username);
+            return solicitudReservaRepository.findByTipoSRNombreNotAndUsuarioUsernameOrderByFecha_emisionDesc(estadoInvisible.get().getNombre(), username);
         } else {
             throw new RuntimeException("ERROR AL OBTENER DATOS");
         }

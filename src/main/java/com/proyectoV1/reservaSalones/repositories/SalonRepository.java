@@ -11,7 +11,8 @@ import java.util.List;
 
 public interface SalonRepository extends JpaRepository<Salon, Integer> {
 
-     List<Salon> findAllByUsuarioUsername(String username);
+     List<Salon> findAllByOrderByNombre();
+     List<Salon> findAllByUsuarioUsernameOrderByNombre(String username);
      @Query("SELECT NEW com.proyectoV1.reservaSalones.dto.SalonDTO(" +
              "s.nombre, s.direccion, s.capacidad, s.descripcion, s.banner_id, s.banner_url, s.estado) " +
              "FROM Salon s " +
@@ -28,7 +29,7 @@ public interface SalonRepository extends JpaRepository<Salon, Integer> {
              "ORDER BY COALESCE(AVG(sol.puntuacion), 0) DESC")
      List<SalonDTO> listaSalonesByCalificacion();
 
-     @Query("SELECT s FROM Salon s LEFT JOIN FETCH s.servicios WHERE s.estado = 1 ORDER BY s.nombre")
+     @Query("SELECT s FROM Salon s LEFT JOIN FETCH s.servicios WHERE s.estado = 1 ORDER BY s.created_at DESC")
      List<Salon> findAllSalonForUserAuth();
 
      @Query("SELECT DISTINCT s, COALESCE((SELECT AVG(DISTINCT sol.puntuacion) FROM SolicitudReserva sol WHERE sol.salon = s), 0) as avgPuntuacion " +

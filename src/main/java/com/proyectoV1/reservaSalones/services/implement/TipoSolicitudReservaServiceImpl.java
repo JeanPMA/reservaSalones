@@ -29,7 +29,7 @@ public class TipoSolicitudReservaServiceImpl implements TipoSolicitudReservaServ
     @Override
     @Transactional(readOnly = true)
     public List<TipoSolicitudReservaDTO> listarTipoSR() {
-        return tipoSolicitudReservaRepository.findAll()
+        return tipoSolicitudReservaRepository.findAllByOrderByNombre()
                 .stream()
                 .map(tipoSolicitudReservaMapper::toDto).collect(Collectors.toList());
     }

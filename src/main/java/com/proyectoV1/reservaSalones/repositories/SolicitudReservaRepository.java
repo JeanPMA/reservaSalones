@@ -9,9 +9,10 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface SolicitudReservaRepository extends JpaRepository<SolicitudReserva, Long> {
-    List<SolicitudReserva> findByTipoSRNombreNotAndUsuarioUsername(String tipoSRNombre, String username);
-    @Query("SELECT new com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO(s.id, s.detalle, s.fecha_reserva, s.fecha_emision, s.servicio, s.motivo, s.puntuacion, s.salon, s.usuario, s.tipoSR) FROM SolicitudReserva s JOIN s.salon sal JOIN sal.usuario u WHERE u.username = :username AND s.tipoSR.nombre IN ('PENDIENTE', 'RECHAZADO')")
+    @Query("SELECT s FROM SolicitudReserva s WHERE s.tipoSR.nombre <> :tipoSRNombre AND s.usuario.username = :username ORDER BY s.fecha_emision DESC")
+    List<SolicitudReserva> findByTipoSRNombreNotAndUsuarioUsernameOrderByFecha_emisionDesc(String tipoSRNombre, String username);
+    @Query("SELECT new com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO(s.id, s.detalle, s.fecha_reserva, s.fecha_emision, s.servicio, s.motivo, s.puntuacion, s.salon, s.usuario, s.tipoSR) FROM SolicitudReserva s JOIN s.salon sal JOIN sal.usuario u WHERE u.username = :username AND s.tipoSR.nombre IN ('PENDIENTE', 'RECHAZADO') ORDER BY s.fecha_emision")
     List<SolicitudReservaDTO> findSolicitudesBySalonUsuarioUsername(@Param("username") String username);
-    @Query("SELECT new com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO(s.id, s.detalle, s.fecha_reserva, s.fecha_emision, s.servicio, s.motivo, s.puntuacion, s.salon, s.usuario, s.tipoSR) FROM SolicitudReserva s JOIN s.salon sal JOIN sal.usuario u WHERE u.username = :username AND s.tipoSR.nombre IN ('ACEPTADO', 'CANCELADO')")
+    @Query("SELECT new com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO(s.id, s.detalle, s.fecha_reserva, s.fecha_emision, s.servicio, s.motivo, s.puntuacion, s.salon, s.usuario, s.tipoSR) FROM SolicitudReserva s JOIN s.salon sal JOIN sal.usuario u WHERE u.username = :username AND s.tipoSR.nombre IN ('ACEPTADO', 'CANCELADO') ORDER BY s.fecha_emision")
     List<SolicitudReservaDTO> findReservasBySalonUsuarioUsername(@Param("username") String username);
 }

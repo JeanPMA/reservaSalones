@@ -34,7 +34,7 @@ public class SalonServiceImpl implements SalonService {
     @Override
     @Transactional(readOnly = true)
     public List<SalonDTO> listarSalon() {
-        return salonRepository.findAll()
+        return salonRepository.findAllByOrderByNombre()
                 .stream()
                 .map(salonMapper::toDto).collect(Collectors.toList());
     }
@@ -97,7 +97,7 @@ public class SalonServiceImpl implements SalonService {
     @Override
     @Transactional(readOnly = true)
     public List<SalonDTO> getSalonByUsername(String username){
-        List<Salon> salones = salonRepository.findAllByUsuarioUsername(username);
+        List<Salon> salones = salonRepository.findAllByUsuarioUsernameOrderByNombre(username);
         return salones.stream().map(salonMapper::toDto).collect(Collectors.toList());
     }
 

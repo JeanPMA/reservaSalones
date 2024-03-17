@@ -29,7 +29,7 @@ public class ServicioServiceImpl implements ServicioService {
     @Override
     @Transactional(readOnly = true)
     public List<ServicioDTO> listarServicio() {
-        return servicioRepository.findAll()
+        return servicioRepository.findAllByOrderByNombre()
                 .stream()
                 .map(servicioMapper::toDto).collect(Collectors.toList());
     }
