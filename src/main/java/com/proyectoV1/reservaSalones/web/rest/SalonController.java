@@ -4,6 +4,7 @@ import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.Servicio;
 import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.ImagenSalonDTO;
+import com.proyectoV1.reservaSalones.dto.SalonAvgDTO;
 import com.proyectoV1.reservaSalones.dto.SalonDTO;
 import com.proyectoV1.reservaSalones.dto.ServicioDTO;
 import com.proyectoV1.reservaSalones.services.SalonService;
@@ -54,7 +55,7 @@ public class SalonController {
     }
     @GetMapping("/auth/recomendado")
     @PreAuthorize("hasRole('USER')")
-    public List<SalonDTO> listarSalonRecomendadoAuth() {
+    public List<SalonAvgDTO> listarSalonRecomendadoAuth() {
         return salonService.listarSalonPorCalificacionAuth();
     }
     @GetMapping("/auth/all")

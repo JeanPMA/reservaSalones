@@ -4,11 +4,13 @@ import com.proyectoV1.reservaSalones.domain.entities.Salon;
 
 import com.proyectoV1.reservaSalones.domain.entities.Servicio;
 import com.proyectoV1.reservaSalones.domain.entities.Usuario;
+import com.proyectoV1.reservaSalones.dto.SalonAvgDTO;
 import com.proyectoV1.reservaSalones.dto.SalonDTO;
 import com.proyectoV1.reservaSalones.repositories.SalonRepository;
 import com.proyectoV1.reservaSalones.repositories.UsuarioRepository;
 import com.proyectoV1.reservaSalones.services.SalonService;
 import com.proyectoV1.reservaSalones.services.mapper.SalonMapper;
+import jakarta.persistence.Tuple;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -51,11 +53,31 @@ public class SalonServiceImpl implements SalonService {
     }
     @Override
     @Transactional(readOnly = true)
-    public List<SalonDTO> listarSalonPorCalificacionAuth(){
-        List<Salon> salones = salonRepository.listaSalonesByCalificacionForUserAuth();
+    public List<SalonAvgDTO> listarSalonPorCalificacionAuth(){
+        List<Object[]> results = salonRepository.listaSalonesByCalificacionForUserAuth();
 
-        return salones.stream()
-                .map(salonMapper::toDto).collect(Collectors.toList());
+        return results.stream()
+                .map(result -> {
+                    Salon salon = (Salon) result[0];
+                    Double avgPuntuacion = (Double) result[1];
+
+                    SalonAvgDTO dto = new SalonAvgDTO();
+                    dto.setId(salon.getId());
+                    dto.setNombre(salon.getNombre());
+                    dto.setDireccion(salon.getDireccion());
+                    dto.setCapacidad(salon.getCapacidad());
+                    dto.setDescripcion(salon.getDescripcion());
+                    dto.setBanner_id(salon.getBanner_id());
+                    dto.setBanner_url(salon.getBanner_url());
+                    dto.setTarifa(salon.getTarifa());
+                    dto.setEstado(salon.getEstado());
+                    dto.setUsuario(salon.getUsuario());
+                    dto.setCreated_at(salon.getCreated_at());
+                    dto.setServicios(salon.getServicios());
+                    dto.setAvgPuntuacion(avgPuntuacion);
+                    return dto;
+                })
+                .collect(Collectors.toList());
     }
     @Override
     @Transactional(readOnly = true)

@@ -4,6 +4,7 @@ import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.Servicio;
 import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
 import com.proyectoV1.reservaSalones.domain.entities.Usuario;
+import com.proyectoV1.reservaSalones.dto.SalonAvgDTO;
 import com.proyectoV1.reservaSalones.dto.SalonDTO;
 import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 
@@ -15,7 +16,7 @@ public interface SalonService {
     List<SalonDTO> listarSalon();
     List<SalonDTO> listarSalonPorCalificacion();
     List<SalonDTO> listarSalonParaUsuarios();
-    List<SalonDTO> listarSalonPorCalificacionAuth();
+    List<SalonAvgDTO> listarSalonPorCalificacionAuth();
     List<SalonDTO> listarSalonParaUsuariosAuth();
     SalonDTO save(SalonDTO dto, String username);
     SalonDTO saveForAdmin(SalonDTO dto);

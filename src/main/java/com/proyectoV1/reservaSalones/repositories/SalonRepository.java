@@ -2,6 +2,7 @@ package com.proyectoV1.reservaSalones.repositories;
 
 import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
+import com.proyectoV1.reservaSalones.dto.SalonAvgDTO;
 import com.proyectoV1.reservaSalones.dto.SalonDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -36,7 +37,7 @@ public interface SalonRepository extends JpaRepository<Salon, Integer> {
              "FROM Salon s " +
              "WHERE s.estado = 1 " +
              "ORDER BY avgPuntuacion DESC")
-     List<Salon> listaSalonesByCalificacionForUserAuth();
+     List<Object[]> listaSalonesByCalificacionForUserAuth();
     /* @Query("SELECT NEW com.proyectoV1.reservaSalones.dto.SalonDTO(" +
              "s.id, s.nombre, s.direccion, s.capacidad, s.descripcion, s.banner_id, s.banner_url, s.tarifa, s.estado, s.usuario, s.created_at) " +
              "FROM Salon s " +
