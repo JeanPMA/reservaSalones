@@ -5,6 +5,7 @@ import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.dto.ImagenSalonDTO;
 import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.error.Mensaje;
+import com.proyectoV1.reservaSalones.repositories.ImagenSalonRepository;
 import com.proyectoV1.reservaSalones.services.ImagenSalonService;
 import com.proyectoV1.reservaSalones.services.SalonService;
 import com.proyectoV1.reservaSalones.services.implement.CloudinaryServiceImpl;
@@ -33,6 +34,8 @@ public class ImagenSalonController {
     CloudinaryServiceImpl cloudinaryService;
     @Autowired
     SalonMapper salonMapper;
+    @Autowired
+    private ImagenSalonRepository imagenSalonRepository;
     private final ImagenSalonService imagenSalonService;
     private final SalonService salonService;
 
@@ -60,6 +63,10 @@ public class ImagenSalonController {
             return new ResponseEntity(new Mensaje("Imagen no valida"), HttpStatus.BAD_REQUEST);
         }
 
+        long count = imagenSalonRepository.countBySalonId(idSalon);
+        if (count >= 6) {
+            return new ResponseEntity(new Mensaje("Ya hay 6 imágenes ingresadas"), HttpStatus.UNAUTHORIZED);
+        }
 
         Map result = cloudinaryService.upload(multipartFile);
         ImagenSalonDTO imagenSalonDTO = new ImagenSalonDTO();
