@@ -1,7 +1,6 @@
 package com.proyectoV1.reservaSalones.services.implement;
 
 import com.proyectoV1.reservaSalones.domain.entities.Rol;
-import com.proyectoV1.reservaSalones.domain.entities.Servicio;
 import com.proyectoV1.reservaSalones.dto.RolDTO;
 import com.proyectoV1.reservaSalones.repositories.RolRepository;
 import com.proyectoV1.reservaSalones.services.RolService;

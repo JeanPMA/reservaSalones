@@ -6,9 +6,7 @@ import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.repositories.RolRepository;
 import com.proyectoV1.reservaSalones.repositories.UsuarioRepository;
 import com.proyectoV1.reservaSalones.security.AuthCredentials;
-import com.proyectoV1.reservaSalones.security.JwtAuthenticationFilter;
 import com.proyectoV1.reservaSalones.security.JwtUtil;
-import com.proyectoV1.reservaSalones.security.UserDetailServiceImpl;
 import com.proyectoV1.reservaSalones.web.rest.response.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,8 +20,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.security.authentication.AuthenticationManager;
 
-import java.util.ArrayList;
-import java.util.Optional;
 
 
 @RestController
@@ -82,11 +78,7 @@ public class LoginController {
 
         return ResponseEntity.ok(new JwtResponse(jwt));
     }
-
-
-    private String desencriptarPassword(String passwordEncriptada) {
-        return passwordEncoder.encode(passwordEncriptada);
-    }
+    
     @GetMapping("/accessAdmin")
     @PreAuthorize("hasRole('ADMIN')")
     public String accessAdmin(){

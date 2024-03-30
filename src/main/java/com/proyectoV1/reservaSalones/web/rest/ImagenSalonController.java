@@ -1,9 +1,7 @@
 package com.proyectoV1.reservaSalones.web.rest;
 
-import com.proyectoV1.reservaSalones.domain.entities.ImagenSalon;
 import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.dto.ImagenSalonDTO;
-import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.error.Mensaje;
 import com.proyectoV1.reservaSalones.repositories.ImagenSalonRepository;
 import com.proyectoV1.reservaSalones.services.ImagenSalonService;
@@ -24,7 +22,6 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/v1/imagen-salon")

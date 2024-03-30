@@ -2,7 +2,6 @@ package com.proyectoV1.reservaSalones.services.implement;
 
 import com.proyectoV1.reservaSalones.domain.entities.Salon;
 
-import com.proyectoV1.reservaSalones.domain.entities.Servicio;
 import com.proyectoV1.reservaSalones.domain.entities.Usuario;
 import com.proyectoV1.reservaSalones.dto.SalonAvgDTO;
 import com.proyectoV1.reservaSalones.dto.SalonDTO;
@@ -10,15 +9,12 @@ import com.proyectoV1.reservaSalones.repositories.SalonRepository;
 import com.proyectoV1.reservaSalones.repositories.UsuarioRepository;
 import com.proyectoV1.reservaSalones.services.SalonService;
 import com.proyectoV1.reservaSalones.services.mapper.SalonMapper;
-import jakarta.persistence.Tuple;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service

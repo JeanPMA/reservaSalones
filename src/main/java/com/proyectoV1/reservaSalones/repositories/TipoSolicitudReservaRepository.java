@@ -1,6 +1,5 @@
 package com.proyectoV1.reservaSalones.repositories;
 
-import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.TipoSolicitudReserva;
 import org.springframework.data.jpa.repository.JpaRepository;
 

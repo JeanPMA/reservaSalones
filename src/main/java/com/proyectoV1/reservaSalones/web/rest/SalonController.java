@@ -2,17 +2,13 @@ package com.proyectoV1.reservaSalones.web.rest;
 
 import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.Servicio;
-import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
-import com.proyectoV1.reservaSalones.dto.ImagenSalonDTO;
 import com.proyectoV1.reservaSalones.dto.SalonAvgDTO;
 import com.proyectoV1.reservaSalones.dto.SalonDTO;
-import com.proyectoV1.reservaSalones.dto.ServicioDTO;
 import com.proyectoV1.reservaSalones.services.SalonService;
 import com.proyectoV1.reservaSalones.services.ServicioService;
 import com.proyectoV1.reservaSalones.services.implement.CloudinaryServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -134,20 +130,17 @@ public class SalonController {
         Set<Servicio> servicios = serviciosIds.stream()
                 .map(servicioId -> servicioService.getServicioById(servicioId)
                         .orElseThrow(() -> new NoSuchElementException("Servicio no encontrado con ID: " + servicioId)))
-                .map(servicioMapper::toEntity)  // Utilizar el mapeador para convertir ServicioDTO a Servicio
+                .map(servicioMapper::toEntity)
                 .collect(Collectors.toSet());
 
-        // Asigna los servicios al objeto Salon
+
         salonPresencia.setServicios(servicios);
 
-        // Manejar la carga de imágenes a través de Cloudinary si se proporciona un nuevo archivo
         if (multipartFile != null && !multipartFile.isEmpty()) {
-            // Borrar la imagen antigua de Cloudinary
             if (salonPresencia.getBanner_id() != null) {
                 cloudinaryService.delete(salonPresencia.getBanner_id());
             }
 
-            // Subir la nueva imagen a Cloudinary
             Map<String, String> result = cloudinaryService.upload(multipartFile);
             salonPresencia.setBanner_id(result.get("public_id"));
             salonPresencia.setBanner_url(result.get("url"));
@@ -189,12 +182,10 @@ public class SalonController {
 
 
         if (multipartFile != null && !multipartFile.isEmpty()) {
-            // Borrar la imagen antigua de Cloudinary
             if (salonPresencia.getBanner_id() != null) {
                 cloudinaryService.delete(salonPresencia.getBanner_id());
             }
 
-            // Subir la nueva imagen a Cloudinary
             Map<String, String> result = cloudinaryService.upload(multipartFile);
             salonPresencia.setBanner_id(result.get("public_id"));
             salonPresencia.setBanner_url(result.get("url"));

@@ -1,8 +1,6 @@
 package com.proyectoV1.reservaSalones.repositories;
 
-import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.Servicio;
-import com.proyectoV1.reservaSalones.dto.SalonDTO;
 import com.proyectoV1.reservaSalones.dto.ServicioDTO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

@@ -1,9 +1,7 @@
 package com.proyectoV1.reservaSalones.web.rest;
 
-import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO;
-import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.services.SolicitudReservaService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

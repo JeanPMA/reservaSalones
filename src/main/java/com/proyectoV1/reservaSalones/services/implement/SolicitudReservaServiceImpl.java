@@ -1,6 +1,5 @@
 package com.proyectoV1.reservaSalones.services.implement;
 
-import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
 import com.proyectoV1.reservaSalones.domain.entities.TipoSolicitudReserva;
 import com.proyectoV1.reservaSalones.domain.entities.Usuario;
@@ -14,7 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

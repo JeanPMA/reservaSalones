@@ -1,6 +1,5 @@
 package com.proyectoV1.reservaSalones.dto;
 
-import jakarta.persistence.Column;
 
 import java.time.LocalDateTime;
 

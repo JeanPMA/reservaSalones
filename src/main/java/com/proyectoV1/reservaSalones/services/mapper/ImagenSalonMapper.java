@@ -1,9 +1,7 @@
 package com.proyectoV1.reservaSalones.services.mapper;
 
 import com.proyectoV1.reservaSalones.domain.entities.ImagenSalon;
-import com.proyectoV1.reservaSalones.domain.entities.Usuario;
 import com.proyectoV1.reservaSalones.dto.ImagenSalonDTO;
-import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import org.springframework.stereotype.Component;
 
 @Component

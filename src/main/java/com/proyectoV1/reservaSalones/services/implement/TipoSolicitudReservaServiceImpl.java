@@ -1,6 +1,5 @@
 package com.proyectoV1.reservaSalones.services.implement;
 
-import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.TipoSolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.TipoSolicitudReservaDTO;
 import com.proyectoV1.reservaSalones.repositories.TipoSolicitudReservaRepository;
@@ -10,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;

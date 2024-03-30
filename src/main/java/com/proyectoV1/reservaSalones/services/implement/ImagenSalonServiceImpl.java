@@ -1,7 +1,6 @@
 package com.proyectoV1.reservaSalones.services.implement;
 
 import com.proyectoV1.reservaSalones.domain.entities.ImagenSalon;
-import com.proyectoV1.reservaSalones.domain.entities.Usuario;
 import com.proyectoV1.reservaSalones.dto.ImagenSalonDTO;
 import com.proyectoV1.reservaSalones.repositories.ImagenSalonRepository;
 import com.proyectoV1.reservaSalones.services.ImagenSalonService;

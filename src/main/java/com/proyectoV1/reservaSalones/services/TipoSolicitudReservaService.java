@@ -1,6 +1,5 @@
 package com.proyectoV1.reservaSalones.services;
 
-import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.TipoSolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.TipoSolicitudReservaDTO;
 

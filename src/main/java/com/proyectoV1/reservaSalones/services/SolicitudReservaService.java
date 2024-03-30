@@ -1,9 +1,7 @@
 package com.proyectoV1.reservaSalones.services;
 
-import com.proyectoV1.reservaSalones.domain.entities.Salon;
 import com.proyectoV1.reservaSalones.domain.entities.SolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.SolicitudReservaDTO;
-import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 
 import java.util.List;
 import java.util.Optional;

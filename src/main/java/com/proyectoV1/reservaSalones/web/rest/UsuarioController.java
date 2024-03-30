@@ -1,6 +1,5 @@
 package com.proyectoV1.reservaSalones.web.rest;
 
-import com.proyectoV1.reservaSalones.domain.entities.Usuario;
 import com.proyectoV1.reservaSalones.dto.UsuarioDTO;
 import com.proyectoV1.reservaSalones.services.UsuarioService;
 import org.springframework.http.HttpStatus;

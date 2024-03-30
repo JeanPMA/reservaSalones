@@ -43,7 +43,7 @@ public class SecurityConfig {
         public void configure(HttpSecurity http) throws Exception {
             http.cors().and().csrf().disable()
                     .authorizeRequests()
-                    .requestMatchers("/api/login").permitAll()  // Permitir acceso a /api/login sin autenticación
+                    .requestMatchers("/api/login").permitAll()
                     .anyRequest().authenticated()
                     .and()
                     .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

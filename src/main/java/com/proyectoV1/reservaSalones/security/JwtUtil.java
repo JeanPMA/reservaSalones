@@ -1,20 +1,15 @@
 package com.proyectoV1.reservaSalones.security;
 
-import com.proyectoV1.reservaSalones.domain.entities.Usuario;
 import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 
-import javax.crypto.SecretKey;
 import java.security.Key;
 import java.util.*;
 import java.util.function.Function;
@@ -42,7 +37,7 @@ public class JwtUtil {
                 .compact();
     }
 
-    // Validar el token de acceso
+
     public boolean isTokenValid(String token){
         try{
             Jwts.parser()

@@ -1,9 +1,7 @@
 package com.proyectoV1.reservaSalones.services.mapper;
 
 import com.proyectoV1.reservaSalones.domain.entities.Servicio;
-import com.proyectoV1.reservaSalones.domain.entities.TipoSolicitudReserva;
 import com.proyectoV1.reservaSalones.dto.ServicioDTO;
-import com.proyectoV1.reservaSalones.dto.TipoSolicitudReservaDTO;
 import org.springframework.stereotype.Component;
 
 @Component
