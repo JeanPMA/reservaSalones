@@ -1,1 +1,0 @@
-ALTER TABLE "salon" ALTER COLUMN "descripcion" TYPE varchar(255);
